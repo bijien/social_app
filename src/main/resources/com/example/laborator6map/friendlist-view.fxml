@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerFriendList">
+   <children>
+      <HBox alignment="CENTER" layoutY="24.0" prefHeight="376.0" prefWidth="608.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="121.0" prefWidth="246.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="251.0" text="Utilizatori in retea" />
+                  <TextField fx:id="filterField" />
+                  <TableView fx:id="tableViewUsers" prefHeight="166.0" prefWidth="246.0">
+                    <columns>
+                      <TableColumn fx:id="columnFirstName" prefWidth="75.0" text="First Name" />
+                      <TableColumn fx:id="columnLastName" prefWidth="92.0" text="Last Name" />
+                       <TableColumn fx:id="columnUsername" prefWidth="78.39996337890625" text="Username" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="buttonAddFriend" mnemonicParsing="false" onAction="#onClickAddFriend" text="Add friend" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="270.0">
+               <children>
+                  <Label text="Lista de prieteni" />
+                  <TextField fx:id="filterFieldFriendList" />
+                  <TableView fx:id="tableViewFriendList" prefHeight="168.0" prefWidth="274.0">
+                    <columns>
+                      <TableColumn fx:id="columnFirstNameFreindList" prefWidth="75.0" text="First Name" />
+                      <TableColumn fx:id="columnLastNameFriendList" prefWidth="103.20001220703125" text="Last Name" />
+                        <TableColumn fx:id="columnUsernameFriendList" prefWidth="91.19993591308594" text="Username" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="buttonRemoveFriend" mnemonicParsing="false" onAction="#onClickRemoveFriend" text="Remove friend" />
+               </children></VBox>
+            <Button fx:id="buttonLogOut" mnemonicParsing="false" onAction="#onClickLogOut" text="Log out" />
+         </children>
+      </HBox>
+      <Label fx:id="labelLoggedInUser" layoutX="12.0" layoutY="6.0" prefHeight="18.0" prefWidth="132.0" />
+   </children>
+</AnchorPane>
