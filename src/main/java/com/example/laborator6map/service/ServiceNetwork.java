@@ -149,4 +149,8 @@ public class ServiceNetwork {
         }
         return filteredList;
     }
+
+    public Iterable<Prietenie> friendRequestForAUser(Long userId){
+        return servicePrietenie.friendRequestForAUser(userId);
+    }
 }

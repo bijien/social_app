@@ -88,7 +88,7 @@ public class ControllerLogin<serviceNetwork> {
                     }
                 });
             }
-        } catch (RepositoryException | ArrayIndexOutOfBoundsException exception) {
+        } catch (RepositoryException exception) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Utilizator neexistent");
             alert.setHeaderText("Nu exista un utilizator cu acest nume");

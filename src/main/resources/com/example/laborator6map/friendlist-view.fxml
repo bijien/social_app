@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerFriendList">
+<AnchorPane prefHeight="402.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerFriendList">
    <children>
-      <HBox alignment="CENTER" layoutY="24.0" prefHeight="376.0" prefWidth="608.0">
+      <HBox alignment="CENTER" layoutY="-2.0" prefHeight="402.0" prefWidth="697.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="121.0" prefWidth="246.0">
+            <VBox alignment="TOP_CENTER" prefHeight="405.0" prefWidth="263.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="251.0" text="Utilizatori in retea" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="255.0" text="Utilizatori in retea" />
                   <TextField fx:id="filterField" />
                   <TableView fx:id="tableViewUsers" prefHeight="166.0" prefWidth="246.0">
                     <columns>
@@ -27,11 +27,11 @@
                   <Button fx:id="buttonAddFriend" mnemonicParsing="false" onAction="#onClickAddFriend" text="Add friend" />
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="270.0">
+            <VBox alignment="TOP_CENTER" prefHeight="401.0" prefWidth="280.0">
                <children>
                   <Label text="Lista de prieteni" />
                   <TextField fx:id="filterFieldFriendList" />
-                  <TableView fx:id="tableViewFriendList" prefHeight="168.0" prefWidth="274.0">
+                  <TableView fx:id="tableViewFriendList" prefHeight="169.0" prefWidth="282.0">
                     <columns>
                       <TableColumn fx:id="columnFirstNameFreindList" prefWidth="75.0" text="First Name" />
                       <TableColumn fx:id="columnLastNameFriendList" prefWidth="103.20001220703125" text="Last Name" />
@@ -40,9 +40,14 @@
                   </TableView>
                   <Button fx:id="buttonRemoveFriend" mnemonicParsing="false" onAction="#onClickRemoveFriend" text="Remove friend" />
                </children></VBox>
-            <Button fx:id="buttonLogOut" mnemonicParsing="false" onAction="#onClickLogOut" text="Log out" />
+            <VBox alignment="CENTER" prefHeight="371.0" prefWidth="221.0" spacing="50.0">
+               <children>
+                  <Button fx:id="buttonViewFriendRequests" mnemonicParsing="false" onAction="#onClickForFriendRequests" prefHeight="26.0" prefWidth="134.0" text="View FriendRequests" />
+                  <Label fx:id="labelLoggedInUser" prefHeight="18.0" prefWidth="132.0" />
+                  <Button fx:id="buttonLogOut" mnemonicParsing="false" onAction="#onClickLogOut" text="Log out" />
+               </children>
+            </VBox>
          </children>
       </HBox>
-      <Label fx:id="labelLoggedInUser" layoutX="12.0" layoutY="6.0" prefHeight="18.0" prefWidth="132.0" />
    </children>
 </AnchorPane>

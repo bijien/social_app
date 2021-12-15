@@ -109,4 +109,20 @@ public class ServicePrietenie {
     public boolean suntPrieteni(Long id1, Long id2) {
         return repositoryPrietenie.findOne(new Tuple<Long, Long>(id1, id2)) != null;
     }
+
+    public Iterable<Prietenie> friendRequestForAUser(Long userId) {
+        if (repositoryUser.findOne(userId) == null)
+            throw new RepositoryException("Utilizator neexistent");
+
+        Set<Prietenie> friendList = new HashSet<>();
+        for (Prietenie prietenie : this.getAll()) {
+            friendList.add(prietenie);
+        }
+
+        return friendList.stream()
+                .filter(x -> (x.getId().getRight().equals(userId) && (x.getStatus().equals("pending") || x.getStatus().equals("declined"))))
+                .collect(Collectors.toList());
+    }
+
+
 }

@@ -174,16 +174,20 @@ public class ControllerFriendList {
         Utilizator selectedUtilizator = tableViewUsers.getSelectionModel().getSelectedItem();
         serviceNetwork.addPrietenie(userIdLoggedIn, selectedUtilizator.getId());
         dataList.clear();
+        initializeUserList();
+        /*
         for (Utilizator utilizator : serviceNetwork.listaUtilizatoriCareNusuntPrieteni(userIdLoggedIn)) {
             dataList.add(utilizator);
         }
         tableViewUsers.setItems(dataList);
+
+         */
     }
 
     public void onClickRemoveFriend(ActionEvent actionEvent) {
         Utilizator selectedUtizator = tableViewFriendList.getSelectionModel().getSelectedItem();
         serviceNetwork.deletePrietenie(userIdLoggedIn,selectedUtizator.getId());
-        dataListFriends.clear();
+        /*dataListFriends.clear();
         for (Prietenie prietenie : serviceNetwork.friendListForAUser(userIdLoggedIn)) {
             if(!prietenie.getId().getLeft().equals(userIdLoggedIn))
                 dataListFriends.add(serviceNetwork.findUser(prietenie.getId().getLeft()));
@@ -191,5 +195,26 @@ public class ControllerFriendList {
                 dataListFriends.add(serviceNetwork.findUser(prietenie.getId().getRight()));
         }
         tableViewFriendList.setItems(dataListFriends);
+        dataList.clear();
+        for (Utilizator utilizator : serviceNetwork.listaUtilizatoriCareNusuntPrieteni(userIdLoggedIn)) {
+            dataList.add(utilizator);
+        }
+        tableViewUsers.setItems(dataList);
+         */
+        dataListFriends.clear();
+        initializeFriendList();
+        dataList.clear();
+        initializeUserList();
+    }
+
+    public void onClickForFriendRequests(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/friendrequest-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ControllerFriendRequest controller = fxmlLoader.<ControllerFriendRequest>getController();
+        controller.setUserId(userIdLoggedIn);
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
