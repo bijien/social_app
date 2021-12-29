@@ -61,7 +61,7 @@ public class ServiceUser {
 
     public Utilizator findUserByUsername(String userName) {
         for(Utilizator utilizator: repository.findAll()){
-            if(utilizator.getFirstName().equals(userName))
+            if(utilizator.getUserName().equals(userName))
                 return utilizator;
         }
         throw new RepositoryException("Utilizator neexistent!");

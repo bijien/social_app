@@ -153,4 +153,9 @@ public class ServiceNetwork {
     public Iterable<Prietenie> friendRequestForAUser(Long userId){
         return servicePrietenie.friendRequestForAUser(userId);
     }
+
+    public Iterable<Prietenie> sentFriendRequestsForAUser(Long userId) {
+        return servicePrietenie.sentFriendRequestsForAUser(userId);
+    }
+
 }

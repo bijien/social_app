@@ -217,4 +217,15 @@ public class ControllerFriendList {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void onClickViewSentFriendRequests(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/sentfriendrequests-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ControllerSentFriendRequests controller = fxmlLoader.<ControllerSentFriendRequests>getController();
+        controller.setUserId(userIdLoggedIn);
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

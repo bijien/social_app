@@ -124,5 +124,19 @@ public class ServicePrietenie {
                 .collect(Collectors.toList());
     }
 
+    public Iterable<Prietenie> sentFriendRequestsForAUser(Long userId) {
+        if (repositoryUser.findOne(userId) == null)
+            throw new RepositoryException("Utilizator neexistent");
+
+        Set<Prietenie> friendList = new HashSet<>();
+        for (Prietenie prietenie : this.getAll()) {
+            friendList.add(prietenie);
+        }
+
+        return friendList.stream()
+                .filter(x -> (x.getId().getLeft().equals(userId) && x.getStatus().equals("pending")))
+                .collect(Collectors.toList());
+    }
+
 
 }
