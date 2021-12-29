@@ -22,17 +22,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerChat {
     @FXML
     public Label labelUser;
     @FXML
     public ListView<String> listViewChat;
+    @FXML
+    public TextField textFieldChat;
     private Long userIdLoggedIn;
     private Long userIdChattingTo;
     private ServiceNetwork serviceNetwork;
@@ -59,10 +62,10 @@ public class ControllerChat {
     private void initializeListViewWithMessages() {
 
         for (Message message : serviceNetwork.conversatieUtilizatori(userIdLoggedIn, userIdChattingTo)) {
-           if(message.getFrom().getId().equals(userIdLoggedIn))
-               dataList.add("You: " + message.getMessage());
-           else
-               dataList.add(message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + ": " + message.getMessage());
+            if (message.getFrom().getId().equals(userIdLoggedIn))
+                dataList.add("You: " + message.getMessage());
+            else
+                dataList.add(message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + ": " + message.getMessage());
         }
         listViewChat.setItems(dataList);
     }
@@ -81,6 +84,25 @@ public class ControllerChat {
     }
 
     public void onClickSend(ActionEvent actionEvent) {
+        if (textFieldChat.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Mesaj");
+            alert.setHeaderText("Mesajul nu poate fi trimis");
+            alert.setContentText("");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    System.out.println("Pressed OK.");
+                }
+            });
+        } else {
+            List<Long> userList = new ArrayList<Long>();
+            userList.add(userIdChattingTo);
+            serviceNetwork.trimiteMesaj(userIdLoggedIn, userList, textFieldChat.getText());
+            dataList.clear();
+            initializeListViewWithMessages();
+            textFieldChat.clear();
+
+        }
     }
 
     public void onClickBack(ActionEvent actionEvent) throws IOException {
