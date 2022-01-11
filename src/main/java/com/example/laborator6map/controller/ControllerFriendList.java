@@ -246,4 +246,16 @@ public class ControllerFriendList {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void onClickRapoarte(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/rapoarte-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ControllerRapoarte controller = fxmlLoader.<ControllerRapoarte>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
+        controller.setUserId(userIdLoggedIn);
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

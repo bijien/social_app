@@ -2,6 +2,8 @@ module com.example.laborator6map {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires org.apache.pdfbox;
+    requires java.desktop;
 
 
     opens com.example.laborator6map to javafx.fxml;

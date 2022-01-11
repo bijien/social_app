@@ -49,6 +49,7 @@
                <children>
                   <Button fx:id="buttonViewFriendRequests" mnemonicParsing="false" onAction="#onClickForFriendRequests" prefHeight="26.0" prefWidth="134.0" text="View FriendRequests" />
                   <Button fx:id="buttonViewSentFriendRequests" mnemonicParsing="false" onAction="#onClickViewSentFriendRequests" text="View sent friend requests" />
+                  <Button mnemonicParsing="false" onAction="#onClickRapoarte" text="Rapoarte" />
                   <Label fx:id="labelLoggedInUser" prefHeight="18.0" prefWidth="132.0" />
                   <Button fx:id="buttonLogOut" mnemonicParsing="false" onAction="#onClickLogOut" text="Log out" />
                </children>
