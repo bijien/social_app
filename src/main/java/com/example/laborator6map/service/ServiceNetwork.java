@@ -9,6 +9,7 @@ import com.example.laborator6map.utils.Graph;
 
 
 import java.lang.reflect.Member;
+import java.time.LocalDate;
 import java.util.*;
 
 public class ServiceNetwork {
@@ -156,6 +157,43 @@ public class ServiceNetwork {
 
     public Iterable<Prietenie> sentFriendRequestsForAUser(Long userId) {
         return servicePrietenie.sentFriendRequestsForAUser(userId);
+    }
+
+    public List<Message> findMessagesByDateFromAFriend(LocalDate dataInceput, LocalDate dataSfarsit, Long userId, Long friendId) {
+        List<Message> messageList = new ArrayList<>();
+        Iterable<Message> messages = serviceMessage.conversatieUtilizatori(userId, friendId);
+        for (Message message : messages) {
+            if (message.getFrom().getId().equals(friendId) && message.getData().toLocalDate().compareTo(dataInceput) >= 0 && message.getData().toLocalDate().compareTo(dataSfarsit) <= 0)
+                messageList.add(message);
+        }
+        return messageList;
+    }
+
+    public List<Utilizator> findNewFriendsByDate(LocalDate dataInceput, LocalDate dataSfarsit, Long userId) {
+        List<Utilizator> utilizatoriList = new ArrayList<>();
+        List<Prietenie> prietenieList = new ArrayList<>();
+        Iterable<Prietenie> prietenii = servicePrietenie.friendListForAUser(userId);
+        for (Prietenie prietenie : prietenii) {
+            if (prietenie.getLocalDate().compareTo(dataInceput) >= 0 && prietenie.getLocalDate().compareTo(dataSfarsit) <= 0 && prietenie.getStatus().equals("approved"))
+                prietenieList.add(prietenie);
+        }
+        for (Prietenie p : prietenieList) {
+            if (p.getId().getLeft().equals(userId))
+                utilizatoriList.add(findUser(p.getId().getRight()));
+            else
+                utilizatoriList.add(findUser(p.getId().getLeft()));
+        }
+        return utilizatoriList;
+    }
+
+    public List<Message> findMessagesByDate(LocalDate dataInceput, LocalDate dataSfarsit, Long userId) {
+        List<Message> messageList = new ArrayList<>();
+        Iterable<Message> messages = serviceMessage.mesajeUtilizator(userId);
+        for (Message message : messages) {
+            if (message.getData().toLocalDate().compareTo(dataInceput) >= 0 && message.getData().toLocalDate().compareTo(dataSfarsit) <= 0)
+                messageList.add(message);
+        }
+        return messageList;
     }
 
 }
