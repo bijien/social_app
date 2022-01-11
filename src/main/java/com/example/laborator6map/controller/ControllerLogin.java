@@ -24,8 +24,12 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
-public class ControllerLogin<serviceNetwork> {
+public class ControllerLogin {
 
     private Stage stage;
     private Scene scene;
@@ -43,24 +47,25 @@ public class ControllerLogin<serviceNetwork> {
 
     private ServiceNetwork serviceNetwork;
 
-    public void initialize() {
-        Repository<Long, Utilizator> utilizatorRepoDB = new UtilizatorDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", new UserValidator());
-        Repository<Long, Message> messageRepositoryDb = new MessageDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", utilizatorRepoDB);
-        ServiceUser serviceUser = new ServiceUser(utilizatorRepoDB, new UserValidator());
-        Repository<Tuple<Long, Long>, Prietenie> prietenieDbRepository = new PrietenieDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres");
-        ServiceMessage serviceMessage = new ServiceMessage(utilizatorRepoDB, prietenieDbRepository, messageRepositoryDb);
-        ServicePrietenie servicePrietenie = new ServicePrietenie(utilizatorRepoDB, prietenieDbRepository);
-        this.serviceNetwork = new ServiceNetwork(serviceUser, servicePrietenie, serviceMessage);
+    public ServiceNetwork getServiceNetwork() {
+        return serviceNetwork;
+    }
+
+    public void setServiceNetwork(ServiceNetwork serviceNetwork) {
+        this.serviceNetwork = serviceNetwork;
     }
 
 
     @FXML
-    protected void onClickLogIn(ActionEvent actionEvent) throws IOException {
-        initialize();
+    protected void onClickLogIn(ActionEvent actionEvent) throws IOException, NoSuchAlgorithmException {
         String username = textFieldLoginIn.getText();
         try {
             Utilizator utilizator = serviceNetwork.findUserByUsername(username);
-            if(passwordFieldLogin.getText().equals(utilizator.getPassword())) {
+            String rawPassword = passwordFieldLogin.getText();
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(rawPassword.getBytes(StandardCharsets.UTF_8));
+            String encoded = Base64.getEncoder().encodeToString(hash);
+            if(encoded.equals(utilizator.getPassword())) {
                 userIdLoggedIn = utilizator.getId();
             /*Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("com/example/laborator6map/friendlist-view.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -71,6 +76,7 @@ public class ControllerLogin<serviceNetwork> {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/friendlist-view.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
+                controller.setServiceNetwork(this.getServiceNetwork());
                 controller.setUserId(userIdLoggedIn);
                 stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
@@ -101,5 +107,15 @@ public class ControllerLogin<serviceNetwork> {
         }
     }
 
+    public void onClickGoToSignUp(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/signup-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ControllerSignUp controller = fxmlLoader.<ControllerSignUp>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
 

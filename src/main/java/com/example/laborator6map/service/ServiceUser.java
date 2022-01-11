@@ -22,8 +22,19 @@ public class ServiceUser {
      */
     public void addUtilizator(String firstName, String lastName, String userName, String password) {
         Utilizator utilizator = new Utilizator(firstName, lastName, userName, password);
-        if(findUserByUsername(userName)!=null)
+        boolean utilizatorExistent = false;
+        for(Utilizator utilizator1 : repository.findAll()) {
+            if(utilizator.getUserName().equals(utilizator1.getUserName())) {
+                if(utilizator.getUserName().equals(utilizator1.getUserName())){
+                    utilizatorExistent = true;
+                    break;
+                }
+
+            }
+        }
+        if(utilizatorExistent) {
             throw new RepositoryException("Utilizator existent!");
+        }
         userValidator.validate(utilizator);
         repository.save(utilizator);
     }

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerLogin">
-   <VBox alignment="CENTER" layoutX="180.0" layoutY="80.0" prefHeight="118.0" prefWidth="239.0">
+   <VBox alignment="CENTER" layoutX="180.0" layoutY="80.0" prefHeight="189.0" prefWidth="239.0" spacing="10.0">
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <Label text="Username" />
@@ -23,5 +23,7 @@
          </children>
       </HBox>
       <Button fx:id="buttonLoginIn" mnemonicParsing="false" onAction="#onClickLogIn" text="Log in" />
+      <Label text="Don't have an account? Sign up" />
+      <Button fx:id="buttonSignUp" mnemonicParsing="false" text="Sign up" onAction="#onClickGoToSignUp"/>
    </VBox>
 </AnchorPane>

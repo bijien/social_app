@@ -50,19 +50,20 @@ public class ControllerFriendRequest {
     public TableColumn<Prietenie, String> columnDataFriendRequest;
     @FXML
     public TableColumn<Prietenie, String> columnStatusFriendRequest;
+
     private ServiceNetwork serviceNetwork;
+    public ServiceNetwork getServiceNetwork() {
+        return serviceNetwork;
+    }
+
+    public void setServiceNetwork(ServiceNetwork serviceNetwork) {
+        this.serviceNetwork = serviceNetwork;
+    }
     private Long userIdLoggedIn;
 
     @FXML
     private void initialize() {
         Platform.runLater(() -> {
-            Repository<Long, Utilizator> utilizatorRepoDB = new UtilizatorDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", new UserValidator());
-            Repository<Long, Message> messageRepositoryDb = new MessageDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", utilizatorRepoDB);
-            ServiceUser serviceUser = new ServiceUser(utilizatorRepoDB, new UserValidator());
-            Repository<Tuple<Long, Long>, Prietenie> prietenieDbRepository = new PrietenieDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres");
-            ServiceMessage serviceMessage = new ServiceMessage(utilizatorRepoDB, prietenieDbRepository, messageRepositoryDb);
-            ServicePrietenie servicePrietenie = new ServicePrietenie(utilizatorRepoDB, prietenieDbRepository);
-            this.serviceNetwork = new ServiceNetwork(serviceUser, servicePrietenie, serviceMessage);
             initializeFriendRequestList();
         });
     }
@@ -89,6 +90,7 @@ public class ControllerFriendRequest {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/friendlist-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

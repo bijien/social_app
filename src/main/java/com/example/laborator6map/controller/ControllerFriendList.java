@@ -65,18 +65,20 @@ public class ControllerFriendList {
     public Button buttonLogOut;
 
     private Long userIdLoggedIn;
+
     private ServiceNetwork serviceNetwork;
+
+    public ServiceNetwork getServiceNetwork() {
+        return serviceNetwork;
+    }
+
+    public void setServiceNetwork(ServiceNetwork serviceNetwork) {
+        this.serviceNetwork = serviceNetwork;
+    }
 
     @FXML
     private void initialize() {
         Platform.runLater(() -> {
-            Repository<Long, Utilizator> utilizatorRepoDB = new UtilizatorDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", new UserValidator());
-            Repository<Long, Message> messageRepositoryDb = new MessageDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", utilizatorRepoDB);
-            ServiceUser serviceUser = new ServiceUser(utilizatorRepoDB, new UserValidator());
-            Repository<Tuple<Long, Long>, Prietenie> prietenieDbRepository = new PrietenieDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres");
-            ServiceMessage serviceMessage = new ServiceMessage(utilizatorRepoDB, prietenieDbRepository, messageRepositoryDb);
-            ServicePrietenie servicePrietenie = new ServicePrietenie(utilizatorRepoDB, prietenieDbRepository);
-            this.serviceNetwork = new ServiceNetwork(serviceUser, servicePrietenie, serviceMessage);
             setLabelUserLoggedIn(userIdLoggedIn);
             initializeUserList();
             initializeFriendList();
@@ -164,6 +166,7 @@ public class ControllerFriendList {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/login-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         ControllerLogin controller = fxmlLoader.<ControllerLogin>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -211,6 +214,7 @@ public class ControllerFriendList {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/friendrequest-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         ControllerFriendRequest controller = fxmlLoader.<ControllerFriendRequest>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -222,6 +226,7 @@ public class ControllerFriendList {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/sentfriendrequests-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         ControllerSentFriendRequests controller = fxmlLoader.<ControllerSentFriendRequests>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -233,6 +238,7 @@ public class ControllerFriendList {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/chat-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         ControllerChat controller = fxmlLoader.<ControllerChat>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
         controller.setUserIdChattingTo(tableViewFriendList.getSelectionModel().getSelectedItem().getId());
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
