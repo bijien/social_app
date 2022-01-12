@@ -1,9 +1,6 @@
 package com.example.laborator6map.controller;
 
-import com.example.laborator6map.domain.Message;
-import com.example.laborator6map.domain.Prietenie;
-import com.example.laborator6map.domain.Tuple;
-import com.example.laborator6map.domain.Utilizator;
+import com.example.laborator6map.domain.*;
 import com.example.laborator6map.repository.Repository;
 import com.example.laborator6map.repository.db.MessageDbRepository;
 import com.example.laborator6map.repository.db.PrietenieDbRepository;
@@ -30,6 +27,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class ControllerFriendList {
     @FXML
@@ -82,7 +82,31 @@ public class ControllerFriendList {
             setLabelUserLoggedIn(userIdLoggedIn);
             initializeUserList();
             initializeFriendList();
+            notifyAboutUpcomingEvents();
         });
+    }
+
+    private void notifyAboutUpcomingEvents() {
+        for(Eveniment eveniment : serviceNetwork.getAllEvenimenteWhereUserParticipating(userIdLoggedIn)) {
+            long dateDiff = ChronoUnit.DAYS.between(LocalDateTime.now(), eveniment.getData());
+            if(serviceNetwork.isParticipating(eveniment.getId(), userIdLoggedIn).equals("DA") && dateDiff <= 3) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Urmeaza urmatorul eveniment");
+                alert.setHeaderText("Organizator: " + eveniment.getCreator().getFirstName() + " " + eveniment.getCreator().getLastName() + "\n" +
+                        "Nume: " + eveniment.getNume() + "\n" +
+                        "Locatie: " + eveniment.getLocatie() + "\n" +
+                        "Descriere: " + eveniment.getDescriere() + "\n" +
+                        "Data :" + eveniment.getData().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm"))
+                );
+                alert.setContentText("");
+                alert.showAndWait().ifPresent(rs -> {
+                    if (rs == ButtonType.OK) {
+                        System.out.println("Pressed OK.");
+                    }
+                });
+
+            }
+        }
     }
 
 
@@ -287,6 +311,42 @@ public class ControllerFriendList {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/rapoarte-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         ControllerRapoarte controller = fxmlLoader.<ControllerRapoarte>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
+        controller.setUserId(userIdLoggedIn);
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void onClickCreeazaEveniment(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/createevent-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ControllerCreateEvent controller = fxmlLoader.<ControllerCreateEvent>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
+        controller.setUserId(userIdLoggedIn);
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void onClickVeziEvenimente(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/events-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ControllerEvent controller = fxmlLoader.<ControllerEvent>getController();
+        controller.setServiceNetwork(this.getServiceNetwork());
+        controller.setUserId(userIdLoggedIn);
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void onClickEvenimenteLaCareParticip(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/participatingevents-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ControllerParticipatingEvents controller = fxmlLoader.<ControllerParticipatingEvents>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

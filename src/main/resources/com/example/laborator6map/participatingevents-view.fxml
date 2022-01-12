@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerParticipatingEvents" styleClass="beige-background" stylesheets="@../css/background.css">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="10.0">
+         <children>
+            <Label text="Evenimente la care particip" />
+            <TableView fx:id="tableViewParticipatingEvents" prefHeight="200.0" prefWidth="200.0" styleClass="table-view" stylesheets="@../css/tableview.css">
+              <columns>
+                 <TableColumn fx:id="columnEventsParticipatingCreator" prefWidth="101.5999755859375" text="Creator" />
+                 <TableColumn fx:id="columnEventsParticipatingNume" prefWidth="112.7999267578125" text="Nume" />
+                 <TableColumn fx:id="columnEventsParticipatingLocatie" prefWidth="87.20001220703125" text="Locatie" />
+                 <TableColumn fx:id="columnEventsParticipatingDescriere" minWidth="0.0" prefWidth="115.20001220703125" text="Descriere" />
+                 <TableColumn fx:id="columnEventsParticipatingData" minWidth="0.0" prefWidth="122.39996337890625" text="Data" />
+                 <TableColumn fx:id="columnEventsParticipatingAbonat" prefWidth="60.0" text="Notificari" />
+              </columns>
+            </TableView>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Abonare notificari" onAction="#onClickAbonareNotificari" styleClass="purple-button" stylesheets="@../css/button.css"/>
+                  <Button mnemonicParsing="false" text="Dezabonare notificari" onAction="#onClickDezabonareNotificari" styleClass="purple-button" stylesheets="@../css/button.css"/>
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" text="Nu mai particip" onAction="#onClickNuMaiParticip" styleClass="purple-button" stylesheets="@../css/button.css"/>
+            <Button mnemonicParsing="false" text="Back" onAction="#onClickGoBack" styleClass="purple-button" stylesheets="@../css/button.css"/>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

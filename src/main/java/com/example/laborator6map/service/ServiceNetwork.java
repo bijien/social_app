@@ -1,26 +1,27 @@
 package com.example.laborator6map.service;
 
-import com.example.laborator6map.domain.Message;
-import com.example.laborator6map.domain.Prietenie;
-import com.example.laborator6map.domain.Tuple;
-import com.example.laborator6map.domain.Utilizator;
+import com.example.laborator6map.domain.*;
 import com.example.laborator6map.utils.GFG;
 import com.example.laborator6map.utils.Graph;
 
 
 import java.lang.reflect.Member;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ServiceNetwork {
     private ServiceUser serviceUser;
     private ServicePrietenie servicePrietenie;
     private ServiceMessage serviceMessage;
+    private ServiceEveniment serviceEveniment;
 
-    public ServiceNetwork(ServiceUser serviceUser, ServicePrietenie servicePrietenie, ServiceMessage serviceMessage) {
+    public ServiceNetwork(ServiceUser serviceUser, ServicePrietenie servicePrietenie, ServiceMessage serviceMessage, ServiceEveniment serviceEveniment) {
         this.serviceUser = serviceUser;
         this.servicePrietenie = servicePrietenie;
         this.serviceMessage = serviceMessage;
+        this.serviceEveniment = serviceEveniment;
     }
 
     public void addUtilizator(String firstName, String lastName, String userName, String password) {
@@ -196,4 +197,56 @@ public class ServiceNetwork {
         return messageList;
     }
 
+    public void createEvent(Long idUserCreator, String nume, String locatie, String descriere, LocalDateTime data) {
+        serviceEveniment.createEvent(idUserCreator, nume, locatie, descriere, data);
+    }
+
+    public Iterable<Eveniment> getAllEvenimente() {
+        return serviceEveniment.getAll();
+    }
+
+
+    public Iterable<Eveniment> getAllEvenimenteWhereUserNotParticipating(Long userIdLoggedIn) {
+        List<Eveniment> eventList = new ArrayList<>();
+        for(Eveniment eveniment : getAllEvenimente()) {
+            if(!eveniment.getParticipantiList().stream().map(Entity::getId).collect(Collectors.toList()).contains(userIdLoggedIn)) {
+                eventList.add(eveniment);
+            }
+        }
+        return eventList;
+    }
+
+    public void participaLaEveniment(Long eventId, Long userId) {
+        serviceEveniment.participaLaEveniment(eventId, userId);
+    }
+
+    public Iterable<Eveniment> getAllEvenimenteWhereUserParticipating(Long userIdLoggedIn) {
+        List<Eveniment> eventList = new ArrayList<>();
+        for(Eveniment eveniment : getAllEvenimente()) {
+            if(eveniment.getParticipantiList().stream().map(Entity::getId).collect(Collectors.toList()).contains(userIdLoggedIn)) {
+                eventList.add(eveniment);
+            }
+        }
+        return eventList;
+    }
+
+    public String isParticipating(Long id, Long userIdLoggedIn) {
+        Eveniment eveniment = serviceEveniment.findEveniment(id);
+        if(eveniment.getParticipantiAbonatiLaNotificariList().stream().map(Entity::getId).collect(Collectors.toList()).contains(userIdLoggedIn))
+            return "DA";
+        return "NU";
+
+    }
+
+    public void abonareLaEveniment(Long id, Long userIdLoggedIn) {
+        serviceEveniment.abonareLaEveniment(id, userIdLoggedIn);
+    }
+
+    public void dezabonareLaEveniment(Long id, Long userIdLoggedIn) {
+        serviceEveniment.dezabonareEveniment(id, userIdLoggedIn);
+    }
+
+    public void nuMaiParticipaLaEveniment(Long id, Long userIdLoggedIn) {
+        serviceEveniment.nuMaiParticipaLaEveniment(id , userIdLoggedIn);
+    }
 }
