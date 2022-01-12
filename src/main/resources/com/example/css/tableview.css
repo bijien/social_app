@@ -1,0 +1,16 @@
+.table-view {
+    -fx-background-color: darkslateblue;
+    -fx-fill: white;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: darkslateblue;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+}

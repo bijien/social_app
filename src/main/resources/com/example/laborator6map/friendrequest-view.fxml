@@ -13,7 +13,7 @@
       <VBox alignment="TOP_CENTER" layoutX="146.0" layoutY="27.0" prefHeight="346.0" prefWidth="306.0" spacing="50.0">
          <children>
             <Label text="Cereri de prietenie" />
-            <TableView fx:id="TableViewFriendRequest" prefHeight="239.0" prefWidth="306.0">
+            <TableView fx:id="TableViewFriendRequest" prefHeight="239.0" prefWidth="306.0" styleClass="table-view" stylesheets="@../css/tableview.css">
               <columns>
                 <TableColumn fx:id="columnFirstNameFriendRequest" prefWidth="75.0" text="First Name" />
                 <TableColumn fx:id="columnLastNameFriendRequest" prefWidth="75.0" text="Last Name" />

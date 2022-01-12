@@ -17,7 +17,7 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="255.0" text="Utilizatori in retea" />
                   <TextField fx:id="filterField" />
-                  <TableView fx:id="tableViewUsers" prefHeight="166.0" prefWidth="246.0">
+                  <TableView fx:id="tableViewUsers" prefHeight="166.0" prefWidth="246.0" styleClass="table-view" stylesheets="@../css/tableview.css">
                     <columns>
                       <TableColumn fx:id="columnFirstName" prefWidth="75.0" text="First Name" />
                       <TableColumn fx:id="columnLastName" prefWidth="92.0" text="Last Name" />
@@ -31,7 +31,7 @@
                <children>
                   <Label text="Lista de prieteni" />
                   <TextField fx:id="filterFieldFriendList" />
-                  <TableView fx:id="tableViewFriendList" prefHeight="169.0" prefWidth="282.0">
+                  <TableView fx:id="tableViewFriendList" prefHeight="169.0" prefWidth="282.0" styleClass="table-view" stylesheets="@../css/tableview.css">
                     <columns>
                       <TableColumn fx:id="columnFirstNameFreindList" prefWidth="75.0" text="First Name" />
                       <TableColumn fx:id="columnLastNameFriendList" prefWidth="103.20001220703125" text="Last Name" />

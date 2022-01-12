@@ -23,7 +23,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tableViewFriendListRaport" prefHeight="100.0" prefWidth="335.0">
+                  <TableView fx:id="tableViewFriendListRaport" prefHeight="100.0" prefWidth="335.0" styleClass="table-view" stylesheets="@../css/tableview.css">
                     <columns>
                       <TableColumn fx:id="columnFirstNameFriendListRaport" prefWidth="117.59997254610062" text="First Name" />
                       <TableColumn fx:id="columnLastNameFriendListRaport" prefWidth="102.4000244140625" text="Last Name" />
