@@ -6,15 +6,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Utilizator extends Entity<Long>{
 
-
-
-
     private String firstName;
     private String lastName;
     private List<Utilizator> friends;
-
-
-
     private String userName;
     private String password;
 
