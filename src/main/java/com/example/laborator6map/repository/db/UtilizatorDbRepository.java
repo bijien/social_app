@@ -12,13 +12,12 @@ public class UtilizatorDbRepository implements Repository<Long, Utilizator> {
     private String url;
     private String username;
     private String password;
-    private Validator<Utilizator> validator;
 
-    public UtilizatorDbRepository(String url, String username, String password, Validator<Utilizator> validator) {
+
+    public UtilizatorDbRepository(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
-        this.validator = validator;
     }
     @Override
     public Utilizator findOne(Long aLong) {

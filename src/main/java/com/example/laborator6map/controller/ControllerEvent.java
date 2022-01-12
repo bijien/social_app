@@ -1,8 +1,6 @@
 package com.example.laborator6map.controller;
 
 import com.example.laborator6map.domain.Eveniment;
-import com.example.laborator6map.domain.Utilizator;
-import com.example.laborator6map.repository.db.EventDbRepository;
 import com.example.laborator6map.service.ServiceNetwork;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,7 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.time.format.DateTimeFormatter;
 
 public class ControllerEvent {

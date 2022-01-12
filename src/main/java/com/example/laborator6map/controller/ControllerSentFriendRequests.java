@@ -1,18 +1,7 @@
 package com.example.laborator6map.controller;
 
-import com.example.laborator6map.domain.Message;
 import com.example.laborator6map.domain.Prietenie;
-import com.example.laborator6map.domain.Tuple;
-import com.example.laborator6map.domain.Utilizator;
-import com.example.laborator6map.repository.Repository;
-import com.example.laborator6map.repository.db.MessageDbRepository;
-import com.example.laborator6map.repository.db.PrietenieDbRepository;
-import com.example.laborator6map.repository.db.UtilizatorDbRepository;
-import com.example.laborator6map.service.ServiceMessage;
 import com.example.laborator6map.service.ServiceNetwork;
-import com.example.laborator6map.service.ServicePrietenie;
-import com.example.laborator6map.service.ServiceUser;
-import com.example.laborator6map.validators.UserValidator;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -32,8 +21,6 @@ import java.io.IOException;
 public class ControllerSentFriendRequests {
     private final ObservableList<Prietenie> dataList = FXCollections.observableArrayList();
     private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     public TableView<Prietenie> tableSentFriendRequests;
     @FXML

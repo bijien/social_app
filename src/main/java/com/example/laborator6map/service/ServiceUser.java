@@ -46,29 +46,11 @@ public class ServiceUser {
         return repository.findAll();
     }
 
-    /**
-     * delete the user with the given id
-     *
-     * @param id
-     * @throws RepositoryException if the user doesn't exist
-     */
-    public void deleteUtilizator(Long id) {
-        if (repository.findOne(id) == null)
-            throw new RepositoryException("Utilizator neexistent");
-        repository.delete(id);
-    }
 
     public Utilizator findUser(Long id) {
         return repository.findOne(id);
     }
 
-    public Utilizator findUserByFirstNameAndLastName(String firstName, String lastName) {
-        for(Utilizator utilizator: repository.findAll()){
-            if(utilizator.getFirstName().equals(firstName) && utilizator.getLastName().equals(lastName))
-                return utilizator;
-        }
-        throw new RepositoryException("Utilizator neexistent!");
-    }
 
     public Utilizator findUserByUsername(String userName) {
         for(Utilizator utilizator: repository.findAll()){

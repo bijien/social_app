@@ -40,29 +40,11 @@ public class Message extends Entity<Long> {
         return reply;
     }
 
-    public void setFrom(Utilizator from) {
-        this.from = from;
-    }
-
-    public void setTo(List<Utilizator> to) {
-        this.to = to;
-    }
-
     public void setData(LocalDateTime data) {
         this.data = data;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
-    public void setReply(Long reply) {
-        this.reply = reply;
-    }
-
-    public void addTo(Utilizator to) {
-        this.to.add(to);
-    }
 
     @Override
     public String toString() {

@@ -3,7 +3,6 @@ package com.example.laborator6map.service;
 import com.example.laborator6map.domain.Prietenie;
 import com.example.laborator6map.domain.Tuple;
 import com.example.laborator6map.domain.Utilizator;
-import com.example.laborator6map.repository.PrietenieFileRepository;
 import com.example.laborator6map.repository.Repository;
 import com.example.laborator6map.validators.RepositoryException;
 import com.example.laborator6map.validators.ValidationException;

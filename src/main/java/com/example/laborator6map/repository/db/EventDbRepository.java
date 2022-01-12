@@ -2,7 +2,6 @@ package com.example.laborator6map.repository.db;
 
 import com.example.laborator6map.domain.Entity;
 import com.example.laborator6map.domain.Eveniment;
-import com.example.laborator6map.domain.Message;
 import com.example.laborator6map.domain.Utilizator;
 import com.example.laborator6map.repository.Repository;
 

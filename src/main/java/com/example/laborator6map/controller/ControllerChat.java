@@ -1,18 +1,7 @@
 package com.example.laborator6map.controller;
 
 import com.example.laborator6map.domain.Message;
-import com.example.laborator6map.domain.Prietenie;
-import com.example.laborator6map.domain.Tuple;
-import com.example.laborator6map.domain.Utilizator;
-import com.example.laborator6map.repository.Repository;
-import com.example.laborator6map.repository.db.MessageDbRepository;
-import com.example.laborator6map.repository.db.PrietenieDbRepository;
-import com.example.laborator6map.repository.db.UtilizatorDbRepository;
-import com.example.laborator6map.service.ServiceMessage;
 import com.example.laborator6map.service.ServiceNetwork;
-import com.example.laborator6map.service.ServicePrietenie;
-import com.example.laborator6map.service.ServiceUser;
-import com.example.laborator6map.validators.UserValidator;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,8 +29,6 @@ public class ControllerChat {
     private Long userIdChattingTo;
     private ServiceNetwork serviceNetwork;
     private Stage stage;
-    private Scene scene;
-    private Parent root;
     private final ObservableList<String> dataList = FXCollections.observableArrayList();
 
     public ServiceNetwork getServiceNetwork() {

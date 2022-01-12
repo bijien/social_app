@@ -1,19 +1,9 @@
 package com.example.laborator6map.controller;
 
-import com.example.laborator6map.domain.Message;
-import com.example.laborator6map.domain.Prietenie;
-import com.example.laborator6map.domain.Tuple;
+
 import com.example.laborator6map.domain.Utilizator;
-import com.example.laborator6map.repository.Repository;
-import com.example.laborator6map.repository.db.MessageDbRepository;
-import com.example.laborator6map.repository.db.PrietenieDbRepository;
-import com.example.laborator6map.repository.db.UtilizatorDbRepository;
-import com.example.laborator6map.service.ServiceMessage;
 import com.example.laborator6map.service.ServiceNetwork;
-import com.example.laborator6map.service.ServicePrietenie;
-import com.example.laborator6map.service.ServiceUser;
 import com.example.laborator6map.validators.RepositoryException;
-import com.example.laborator6map.validators.UserValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,8 +22,7 @@ import java.util.Base64;
 public class ControllerLogin {
 
     private Stage stage;
-    private Scene scene;
-    private Parent root;
+
     private Long userIdLoggedIn;
 
     @FXML
@@ -67,12 +56,6 @@ public class ControllerLogin {
             String encoded = Base64.getEncoder().encodeToString(hash);
             if(encoded.equals(utilizator.getPassword())) {
                 userIdLoggedIn = utilizator.getId();
-            /*Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("com/example/laborator6map/friendlist-view.fxml"));
-            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-             */
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/friendlist-view.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();

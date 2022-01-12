@@ -1,14 +1,11 @@
 package com.example.laborator6map.domain;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class Utilizator extends Entity<Long>{
 
     private String firstName;
     private String lastName;
-    private List<Utilizator> friends;
     private String userName;
     private String password;
 
@@ -27,13 +24,6 @@ public class Utilizator extends Entity<Long>{
         return firstName;
     }
 
-    /**
-     * set the first name of the user
-     * @param firstName first name to set
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
     /**
      *
@@ -43,21 +33,12 @@ public class Utilizator extends Entity<Long>{
         return lastName;
     }
 
-    /**
-     * set the last name of the user
-     * @param lastName last name to set
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+
 
     /**
      *
      * @return the friend list of the user
      */
-    public List<Utilizator> getFriends() {
-        return friends;
-    }
     public String getUserName() {
         return userName;
     }

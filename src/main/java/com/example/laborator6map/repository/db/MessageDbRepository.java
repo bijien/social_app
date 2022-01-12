@@ -5,7 +5,6 @@ import com.example.laborator6map.domain.Utilizator;
 import com.example.laborator6map.repository.Repository;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;

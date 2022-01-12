@@ -14,8 +14,6 @@ public class Eveniment extends Entity<Long> {
     private List<Utilizator> participantiAbonatiLaNotificariList;
 
 
-
-
     public Eveniment(Utilizator creator, String nume, String locatie, String descriere, LocalDateTime data, List<Utilizator> participantiList, List<Utilizator> participantiAbonatiLaNotificariList) {
         this.creator = creator;
         this.nume = nume;
@@ -26,25 +24,16 @@ public class Eveniment extends Entity<Long> {
         this.participantiAbonatiLaNotificariList = participantiAbonatiLaNotificariList;
     }
 
-    public void setParticipantiAbonatiLaNotificariList(List<Utilizator> participantiAbonatiLaNotificariList) {
-        this.participantiAbonatiLaNotificariList = participantiAbonatiLaNotificariList;
-    }
 
     public void setNume(String nume) {
         this.nume = nume;
     }
 
-    public void setLocatie(String locatie) {
-        this.locatie = locatie;
-    }
 
     public void setData(LocalDateTime data) {
         this.data = data;
     }
 
-    public void setParticipantiList(List<Utilizator> participantiList) {
-        this.participantiList = participantiList;
-    }
 
     public String getNume() {
         return nume;
@@ -63,41 +52,16 @@ public class Eveniment extends Entity<Long> {
 
     }
 
-    public void addParticipantiList(Utilizator utilizator){
-        participantiList.add(utilizator);
-
-    }
-
-    public void addParticipantiAbonatiLaNotificariList(Utilizator utilizator){
-        participantiAbonatiLaNotificariList.add(utilizator);
-
-    }
-
-    public void deleteParticipantiList(Utilizator utilizator){
-        participantiList.remove(utilizator);
-
-    }
-
-    public void deleteParticipantiAbonatiLaNotificariList(Utilizator utilizator){
-        participantiAbonatiLaNotificariList.remove(utilizator);
-
-    }
 
     public String getDescriere() {
         return descriere;
     }
 
-    public void setDescriere(String descriere) {
-        this.descriere = descriere;
-    }
 
     public Utilizator getCreator() {
         return creator;
     }
 
-    public void setCreator(Utilizator creator) {
-        this.creator = creator;
-    }
 
     public List<Utilizator> getParticipantiAbonatiLaNotificariList() {
         return participantiAbonatiLaNotificariList;

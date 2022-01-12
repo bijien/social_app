@@ -1,15 +1,7 @@
 package com.example.laborator6map.controller;
 
 import com.example.laborator6map.domain.*;
-import com.example.laborator6map.repository.Repository;
-import com.example.laborator6map.repository.db.MessageDbRepository;
-import com.example.laborator6map.repository.db.PrietenieDbRepository;
-import com.example.laborator6map.repository.db.UtilizatorDbRepository;
-import com.example.laborator6map.service.ServiceMessage;
 import com.example.laborator6map.service.ServiceNetwork;
-import com.example.laborator6map.service.ServicePrietenie;
-import com.example.laborator6map.service.ServiceUser;
-import com.example.laborator6map.validators.UserValidator;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,8 +48,6 @@ public class ControllerFriendList {
     private final ObservableList<Utilizator> dataListFriends = FXCollections.observableArrayList();
 
     private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     public Label labelLoggedInUser;
     @FXML
@@ -214,13 +203,6 @@ public class ControllerFriendList {
             dataList.clear();
             initializeUserList();
         }
-        /*
-        for (Utilizator utilizator : serviceNetwork.listaUtilizatoriCareNusuntPrieteni(userIdLoggedIn)) {
-            dataList.add(utilizator);
-        }
-        tableViewUsers.setItems(dataList);
-
-         */
     }
 
     public void onClickRemoveFriend(ActionEvent actionEvent) {
@@ -237,20 +219,6 @@ public class ControllerFriendList {
             });
         } else {
             serviceNetwork.deletePrietenie(userIdLoggedIn, selectedUtizator.getId());
-        /*dataListFriends.clear();
-        for (Prietenie prietenie : serviceNetwork.friendListForAUser(userIdLoggedIn)) {
-            if(!prietenie.getId().getLeft().equals(userIdLoggedIn))
-                dataListFriends.add(serviceNetwork.findUser(prietenie.getId().getLeft()));
-            else if(!prietenie.getId().getRight().equals(userIdLoggedIn))
-                dataListFriends.add(serviceNetwork.findUser(prietenie.getId().getRight()));
-        }
-        tableViewFriendList.setItems(dataListFriends);
-        dataList.clear();
-        for (Utilizator utilizator : serviceNetwork.listaUtilizatoriCareNusuntPrieteni(userIdLoggedIn)) {
-            dataList.add(utilizator);
-        }
-        tableViewUsers.setItems(dataList);
-         */
             dataListFriends.clear();
             initializeFriendList();
             dataList.clear();
