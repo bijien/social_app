@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerSignUp">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerSignUp" styleClass="beige-background" stylesheets="@../css/background.css">
    <children>
       <VBox alignment="CENTER" layoutX="101.0" layoutY="61.0" prefHeight="288.0" prefWidth="398.0" spacing="10.0">
          <children>
@@ -43,8 +43,8 @@
                   <PasswordField fx:id="passwordFieldConfirmPassword"/>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" text="Sign up" onAction="#onClickSignUp"/>
-            <Button mnemonicParsing="false" text="Back" onAction="#onClickGoBack"/>
+            <Button mnemonicParsing="false" text="Sign up" onAction="#onClickSignUp" styleClass="purple-button" stylesheets="@../css/button.css"/>
+            <Button mnemonicParsing="false" text="Back" onAction="#onClickGoBack" styleClass="purple-button" stylesheets="@../css/button.css"/>
          </children>
       </VBox>
    </children>
