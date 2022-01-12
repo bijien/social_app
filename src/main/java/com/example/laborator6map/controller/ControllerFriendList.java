@@ -122,9 +122,9 @@ public class ControllerFriendList {
         columnLastNameFriendList.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         columnUsernameFriendList.setCellValueFactory(new PropertyValueFactory<>("userName"));
         for (Prietenie prietenie : serviceNetwork.friendListForAUser(userIdLoggedIn)) {
-            if(!prietenie.getId().getLeft().equals(userIdLoggedIn))
+            if (!prietenie.getId().getLeft().equals(userIdLoggedIn))
                 dataListFriends.add(serviceNetwork.findUser(prietenie.getId().getLeft()));
-            else if(!prietenie.getId().getRight().equals(userIdLoggedIn))
+            else if (!prietenie.getId().getRight().equals(userIdLoggedIn))
                 dataListFriends.add(serviceNetwork.findUser(prietenie.getId().getRight()));
         }
         FilteredList<Utilizator> filteredData = new FilteredList<>(dataListFriends, b -> true);
@@ -175,9 +175,21 @@ public class ControllerFriendList {
 
     public void onClickAddFriend(ActionEvent actionEvent) {
         Utilizator selectedUtilizator = tableViewUsers.getSelectionModel().getSelectedItem();
-        serviceNetwork.addPrietenie(userIdLoggedIn, selectedUtilizator.getId());
-        dataList.clear();
-        initializeUserList();
+        if (selectedUtilizator == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Date incomplete");
+            alert.setHeaderText("Trebuie sa selectati un utilizator din lista");
+            alert.setContentText("Incercati din nou");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    System.out.println("Pressed OK.");
+                }
+            });
+        } else {
+            serviceNetwork.addPrietenie(userIdLoggedIn, selectedUtilizator.getId());
+            dataList.clear();
+            initializeUserList();
+        }
         /*
         for (Utilizator utilizator : serviceNetwork.listaUtilizatoriCareNusuntPrieteni(userIdLoggedIn)) {
             dataList.add(utilizator);
@@ -189,7 +201,18 @@ public class ControllerFriendList {
 
     public void onClickRemoveFriend(ActionEvent actionEvent) {
         Utilizator selectedUtizator = tableViewFriendList.getSelectionModel().getSelectedItem();
-        serviceNetwork.deletePrietenie(userIdLoggedIn,selectedUtizator.getId());
+        if (selectedUtizator == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Date incomplete");
+            alert.setHeaderText("Trebuie sa selectati un utilizator din lista");
+            alert.setContentText("Incercati din nou");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    System.out.println("Pressed OK.");
+                }
+            });
+        } else {
+            serviceNetwork.deletePrietenie(userIdLoggedIn, selectedUtizator.getId());
         /*dataListFriends.clear();
         for (Prietenie prietenie : serviceNetwork.friendListForAUser(userIdLoggedIn)) {
             if(!prietenie.getId().getLeft().equals(userIdLoggedIn))
@@ -204,10 +227,11 @@ public class ControllerFriendList {
         }
         tableViewUsers.setItems(dataList);
          */
-        dataListFriends.clear();
-        initializeFriendList();
-        dataList.clear();
-        initializeUserList();
+            dataListFriends.clear();
+            initializeFriendList();
+            dataList.clear();
+            initializeUserList();
+        }
     }
 
     public void onClickForFriendRequests(ActionEvent actionEvent) throws IOException {
@@ -235,16 +259,28 @@ public class ControllerFriendList {
     }
 
     public void onClickStartChat(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/chat-view.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        ControllerChat controller = fxmlLoader.<ControllerChat>getController();
-        controller.setServiceNetwork(this.getServiceNetwork());
-        controller.setUserId(userIdLoggedIn);
-        controller.setUserIdChattingTo(tableViewFriendList.getSelectionModel().getSelectedItem().getId());
-        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        if (tableViewFriendList.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Date incomplete");
+            alert.setHeaderText("Trebuie sa selectati un utilizator din lista");
+            alert.setContentText("Incercati din nou");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    System.out.println("Pressed OK.");
+                }
+            });
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/chat-view.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            ControllerChat controller = fxmlLoader.<ControllerChat>getController();
+            controller.setServiceNetwork(this.getServiceNetwork());
+            controller.setUserId(userIdLoggedIn);
+            controller.setUserIdChattingTo(tableViewFriendList.getSelectionModel().getSelectedItem().getId());
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void onClickRapoarte(ActionEvent actionEvent) throws IOException {

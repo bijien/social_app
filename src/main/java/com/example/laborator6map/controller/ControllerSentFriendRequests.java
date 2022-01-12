@@ -23,9 +23,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -52,6 +50,7 @@ public class ControllerSentFriendRequests {
     public Button buttonBack;
 
     private ServiceNetwork serviceNetwork;
+
     public ServiceNetwork getServiceNetwork() {
         return serviceNetwork;
     }
@@ -59,6 +58,7 @@ public class ControllerSentFriendRequests {
     public void setServiceNetwork(ServiceNetwork serviceNetwork) {
         this.serviceNetwork = serviceNetwork;
     }
+
     private Long userIdLoggedIn;
 
     @FXML
@@ -69,8 +69,8 @@ public class ControllerSentFriendRequests {
     }
 
     private void initializeSentFriendRequestList() {
-        columnFirstNameSentFriendRequest.setCellValueFactory(cellData-> new SimpleStringProperty(serviceNetwork.findUser(cellData.getValue().getId().getRight()).getFirstName()));
-        columnLastNameSentFriendRequest.setCellValueFactory(cellData-> new SimpleStringProperty(serviceNetwork.findUser(cellData.getValue().getId().getRight()).getLastName()));
+        columnFirstNameSentFriendRequest.setCellValueFactory(cellData -> new SimpleStringProperty(serviceNetwork.findUser(cellData.getValue().getId().getRight()).getFirstName()));
+        columnLastNameSentFriendRequest.setCellValueFactory(cellData -> new SimpleStringProperty(serviceNetwork.findUser(cellData.getValue().getId().getRight()).getLastName()));
         columnDataSentFriendRequest.setCellValueFactory(new PropertyValueFactory<>("localDate"));
         columnStatusSentFriendRequest.setCellValueFactory(new PropertyValueFactory<>("status"));
         for (Prietenie prietenie : serviceNetwork.sentFriendRequestsForAUser(userIdLoggedIn)) {
@@ -85,12 +85,24 @@ public class ControllerSentFriendRequests {
 
     public void onClickRemoveFriendRequest(ActionEvent actionEvent) {
         Prietenie prietenieSelected = tableSentFriendRequests.getSelectionModel().getSelectedItem();
-        serviceNetwork.deletePrietenie(prietenieSelected.getId().getLeft(),prietenieSelected.getId().getRight());
-        dataList.clear();
-        for (Prietenie prietenie : serviceNetwork.sentFriendRequestsForAUser(userIdLoggedIn)) {
-            dataList.add(prietenie);
+        if (prietenieSelected == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Date incomplete");
+            alert.setHeaderText("Trebuie sa selectati o cerere din lista");
+            alert.setContentText("Incercati din nou");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    System.out.println("Pressed OK.");
+                }
+            });
+        } else {
+            serviceNetwork.deletePrietenie(prietenieSelected.getId().getLeft(), prietenieSelected.getId().getRight());
+            dataList.clear();
+            for (Prietenie prietenie : serviceNetwork.sentFriendRequestsForAUser(userIdLoggedIn)) {
+                dataList.add(prietenie);
+            }
+            tableSentFriendRequests.setItems(dataList);
         }
-        tableSentFriendRequests.setItems(dataList);
     }
 
     public void onClickGoBack(ActionEvent actionEvent) throws IOException {

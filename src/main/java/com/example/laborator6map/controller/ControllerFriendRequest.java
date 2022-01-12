@@ -52,6 +52,7 @@ public class ControllerFriendRequest {
     public TableColumn<Prietenie, String> columnStatusFriendRequest;
 
     private ServiceNetwork serviceNetwork;
+
     public ServiceNetwork getServiceNetwork() {
         return serviceNetwork;
     }
@@ -59,6 +60,7 @@ public class ControllerFriendRequest {
     public void setServiceNetwork(ServiceNetwork serviceNetwork) {
         this.serviceNetwork = serviceNetwork;
     }
+
     private Long userIdLoggedIn;
 
     @FXML
@@ -69,8 +71,8 @@ public class ControllerFriendRequest {
     }
 
     private void initializeFriendRequestList() {
-        columnFirstNameFriendRequest.setCellValueFactory(cellData-> new SimpleStringProperty(serviceNetwork.findUser(cellData.getValue().getId().getLeft()).getFirstName()));
-        columnLastNameFriendRequest.setCellValueFactory(cellData-> new SimpleStringProperty(serviceNetwork.findUser(cellData.getValue().getId().getLeft()).getLastName()));
+        columnFirstNameFriendRequest.setCellValueFactory(cellData -> new SimpleStringProperty(serviceNetwork.findUser(cellData.getValue().getId().getLeft()).getFirstName()));
+        columnLastNameFriendRequest.setCellValueFactory(cellData -> new SimpleStringProperty(serviceNetwork.findUser(cellData.getValue().getId().getLeft()).getLastName()));
         columnDataFriendRequest.setCellValueFactory(new PropertyValueFactory<>("localDate"));
         columnStatusFriendRequest.setCellValueFactory(new PropertyValueFactory<>("status"));
 
@@ -100,49 +102,69 @@ public class ControllerFriendRequest {
 
     public void onClickAcceptFriendRequest(ActionEvent actionEvent) {
         Prietenie prietenieSelected = TableViewFriendRequest.getSelectionModel().getSelectedItem();
-        if(prietenieSelected.getStatus().equals("pending"))
-        {
-            serviceNetwork.acceptaPrietenie(prietenieSelected.getId().getLeft(),prietenieSelected.getId().getRight());
-            dataList.clear();
-            for (Prietenie prietenie : serviceNetwork.friendRequestForAUser(userIdLoggedIn)) {
-                dataList.add(prietenie);
-            }
-            TableViewFriendRequest.setItems(dataList);
-        }
-        else if(prietenieSelected.getStatus().equals("declined")){
+        if (prietenieSelected == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Cerere de prietenie");
-            alert.setHeaderText("Aceasta cerere nu poate fi acceptata deoarece a fost refuzata");
-            alert.setContentText("");
+            alert.setTitle("Date incomplete");
+            alert.setHeaderText("Trebuie sa selectati o cerere din lista");
+            alert.setContentText("Incercati din nou");
             alert.showAndWait().ifPresent(rs -> {
                 if (rs == ButtonType.OK) {
                     System.out.println("Pressed OK.");
                 }
             });
+        } else {
+            if (prietenieSelected.getStatus().equals("pending")) {
+                serviceNetwork.acceptaPrietenie(prietenieSelected.getId().getLeft(), prietenieSelected.getId().getRight());
+                dataList.clear();
+                for (Prietenie prietenie : serviceNetwork.friendRequestForAUser(userIdLoggedIn)) {
+                    dataList.add(prietenie);
+                }
+                TableViewFriendRequest.setItems(dataList);
+            } else if (prietenieSelected.getStatus().equals("declined")) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Cerere de prietenie");
+                alert.setHeaderText("Aceasta cerere nu poate fi acceptata deoarece a fost refuzata");
+                alert.setContentText("");
+                alert.showAndWait().ifPresent(rs -> {
+                    if (rs == ButtonType.OK) {
+                        System.out.println("Pressed OK.");
+                    }
+                });
+            }
         }
     }
 
     public void onClickDeclineFriendRequest(ActionEvent actionEvent) {
         Prietenie prietenieSelected = TableViewFriendRequest.getSelectionModel().getSelectedItem();
-        if(prietenieSelected.getStatus().equals("pending"))
-        {
-            serviceNetwork.respingePrietenie(prietenieSelected.getId().getLeft(),prietenieSelected.getId().getRight());
-            dataList.clear();
-            for (Prietenie prietenie : serviceNetwork.friendRequestForAUser(userIdLoggedIn)) {
-                dataList.add(prietenie);
-            }
-            TableViewFriendRequest.setItems(dataList);
-        }
-        else if(prietenieSelected.getStatus().equals("declined")){
+        if (prietenieSelected == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Cerere de prietenie");
-            alert.setHeaderText("Aceasta cerere a fost deja refuzata");
-            alert.setContentText("");
+            alert.setTitle("Date incomplete");
+            alert.setHeaderText("Trebuie sa selectati o cerere din lista");
+            alert.setContentText("Incercati din nou");
             alert.showAndWait().ifPresent(rs -> {
                 if (rs == ButtonType.OK) {
                     System.out.println("Pressed OK.");
                 }
             });
+        } else {
+            if (prietenieSelected.getStatus().equals("pending")) {
+                serviceNetwork.respingePrietenie(prietenieSelected.getId().getLeft(), prietenieSelected.getId().getRight());
+                dataList.clear();
+                for (Prietenie prietenie : serviceNetwork.friendRequestForAUser(userIdLoggedIn)) {
+                    dataList.add(prietenie);
+                }
+                TableViewFriendRequest.setItems(dataList);
+            } else if (prietenieSelected.getStatus().equals("declined")) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Cerere de prietenie");
+                alert.setHeaderText("Aceasta cerere a fost deja refuzata");
+                alert.setContentText("");
+                alert.showAndWait().ifPresent(rs -> {
+                    if (rs == ButtonType.OK) {
+                        System.out.println("Pressed OK.");
+                    }
+                });
+            }
         }
     }
 }
