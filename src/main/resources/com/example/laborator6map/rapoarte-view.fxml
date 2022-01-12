@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerRapoarte">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerRapoarte" styleClass="beige-background" stylesheets="@../css/background.css">
    <children>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -34,11 +34,11 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                <children>
-                  <Button onAction="#onClickRaportMesajeSiPrieteni" mnemonicParsing="false" text="Mesaje si prieteni noi" />
-                  <Button onAction="#onClickRaportMesajeDeLaUnPrieten" mnemonicParsing="false" text="Mesaje de la un prieten" />
+                  <Button onAction="#onClickRaportMesajeSiPrieteni" mnemonicParsing="false" text="Mesaje si prieteni noi" styleClass="purple-button" stylesheets="@../css/button.css"/>
+                  <Button onAction="#onClickRaportMesajeDeLaUnPrieten" mnemonicParsing="false" text="Mesaje de la un prieten" styleClass="purple-button" stylesheets="@../css/button.css"/>
                </children>
             </HBox>
-            <Button onAction="#onClickGoBack" mnemonicParsing="false" text="Back" />
+            <Button onAction="#onClickGoBack" mnemonicParsing="false" text="Back" styleClass="purple-button" stylesheets="@../css/button.css"/>
          </children>
       </VBox>
    </children>

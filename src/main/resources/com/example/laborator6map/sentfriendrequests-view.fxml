@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerSentFriendRequests">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerSentFriendRequests" styleClass="beige-background" stylesheets="@../css/background.css">
    <children>
       <VBox alignment="CENTER" layoutX="116.0" layoutY="27.0" prefHeight="310.0" prefWidth="367.0" spacing="20.0">
          <children>
@@ -20,8 +20,8 @@
                   <TableColumn fx:id="columnStatusSentFriendRequest" prefWidth="75.0" text="Status" />
               </columns>
             </TableView>
-            <Button fx:id="buttonRemoveFriendRequest" mnemonicParsing="false" onAction="#onClickRemoveFriendRequest" text="Remove" />
-            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onClickGoBack" text="Back" />
+            <Button fx:id="buttonRemoveFriendRequest" mnemonicParsing="false" onAction="#onClickRemoveFriendRequest" text="Remove" styleClass="purple-button" stylesheets="@../css/button.css"/>
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onClickGoBack" text="Back" styleClass="purple-button" stylesheets="@../css/button.css"/>
          </children>
       </VBox>
    </children>

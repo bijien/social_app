@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerFriendRequest">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerFriendRequest" styleClass="beige-background" stylesheets="@../css/background.css">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="146.0" layoutY="27.0" prefHeight="346.0" prefWidth="306.0" spacing="50.0">
          <children>
@@ -23,11 +23,11 @@
             </TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Button fx:id="buttonAcceptFriendRequest" mnemonicParsing="false" onAction="#onClickAcceptFriendRequest" text="Accept friend request" />
-                  <Button fx:id="buttonDeclineFriendRequest" mnemonicParsing="false" onAction="#onClickDeclineFriendRequest" text="Decline friend request" />
+                  <Button fx:id="buttonAcceptFriendRequest" mnemonicParsing="false" onAction="#onClickAcceptFriendRequest" text="Accept friend request" styleClass="purple-button" stylesheets="@../css/button.css"/>
+                  <Button fx:id="buttonDeclineFriendRequest" mnemonicParsing="false" onAction="#onClickDeclineFriendRequest" text="Decline friend request" styleClass="purple-button" stylesheets="@../css/button.css"/>
                </children>
             </HBox>
-            <Button fx:id="buttonBack" lineSpacing="20.0" mnemonicParsing="false" onAction="#onClickGoBackToFriendList" text="Back" />
+            <Button fx:id="buttonBack" lineSpacing="20.0" mnemonicParsing="false" onAction="#onClickGoBackToFriendList" text="Back" styleClass="purple-button" stylesheets="@../css/button.css"/>
          </children>
       </VBox>
    </children>

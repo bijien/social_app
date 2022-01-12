@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="402.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerFriendList">
+<AnchorPane prefHeight="402.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborator6map.controller.ControllerFriendList" styleClass="beige-background" stylesheets="@../css/background.css">
    <children>
       <HBox alignment="CENTER" layoutY="-2.0" prefHeight="402.0" prefWidth="697.0">
          <children>
@@ -24,7 +24,7 @@
                        <TableColumn fx:id="columnUsername" prefWidth="78.39996337890625" text="Username" />
                     </columns>
                   </TableView>
-                  <Button fx:id="buttonAddFriend" mnemonicParsing="false" onAction="#onClickAddFriend" text="Add friend" />
+                  <Button fx:id="buttonAddFriend" mnemonicParsing="false" onAction="#onClickAddFriend" text="Add friend" styleClass="purple-button" stylesheets="@../css/button.css"/>
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="401.0" prefWidth="280.0">
@@ -40,18 +40,18 @@
                   </TableView>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                      <children>
-                        <Button fx:id="buttonStartChat" mnemonicParsing="false" onAction="#onClickStartChat" prefHeight="27.0" prefWidth="88.0" text="Start Chat" />
-                        <Button fx:id="buttonRemoveFriend" mnemonicParsing="false" onAction="#onClickRemoveFriend" prefHeight="13.0" prefWidth="99.0" text="Remove friend" />
+                        <Button fx:id="buttonStartChat" mnemonicParsing="false" onAction="#onClickStartChat" prefHeight="27.0" prefWidth="88.0" text="Open Chat" styleClass="purple-button" stylesheets="@../css/button.css"/>
+                        <Button fx:id="buttonRemoveFriend" mnemonicParsing="false" onAction="#onClickRemoveFriend" prefHeight="13.0" prefWidth="99.0" text="Remove friend" styleClass="purple-button" stylesheets="@../css/button.css"/>
                      </children>
                   </VBox>
                </children></VBox>
             <VBox alignment="CENTER" prefHeight="371.0" prefWidth="221.0" spacing="50.0">
                <children>
-                  <Button fx:id="buttonViewFriendRequests" mnemonicParsing="false" onAction="#onClickForFriendRequests" prefHeight="26.0" prefWidth="134.0" text="View FriendRequests" />
-                  <Button fx:id="buttonViewSentFriendRequests" mnemonicParsing="false" onAction="#onClickViewSentFriendRequests" text="View sent friend requests" />
-                  <Button mnemonicParsing="false" onAction="#onClickRapoarte" text="Rapoarte" />
+                  <Button fx:id="buttonViewFriendRequests" mnemonicParsing="false" onAction="#onClickForFriendRequests" prefHeight="26.0" prefWidth="134.0" text="View FriendRequests" styleClass="purple-button" stylesheets="@../css/button.css"/>
+                  <Button fx:id="buttonViewSentFriendRequests" mnemonicParsing="false" onAction="#onClickViewSentFriendRequests" text="View sent friend requests" styleClass="purple-button" stylesheets="@../css/button.css"/>
+                  <Button mnemonicParsing="false" onAction="#onClickRapoarte" text="Rapoarte" styleClass="purple-button" stylesheets="@../css/button.css"/>
                   <Label fx:id="labelLoggedInUser" prefHeight="18.0" prefWidth="132.0" />
-                  <Button fx:id="buttonLogOut" mnemonicParsing="false" onAction="#onClickLogOut" text="Log out" />
+                  <Button fx:id="buttonLogOut" mnemonicParsing="false" onAction="#onClickLogOut" text="Log out" styleClass="purple-button" stylesheets="@../css/button.css"/>
                </children>
             </VBox>
          </children>
