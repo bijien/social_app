@@ -1,6 +1,8 @@
 package com.example.laborator6map.controller;
 
 import com.example.laborator6map.domain.Message;
+import com.example.laborator6map.domain.Tuple;
+import com.example.laborator6map.domain.Utilizator;
 import com.example.laborator6map.service.ServiceNetwork;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ControllerChat {
@@ -25,11 +28,17 @@ public class ControllerChat {
     public ListView<String> listViewChat;
     @FXML
     public TextField textFieldChat;
+    public Button previousButton;
+    public Button nextButton;
     private Long userIdLoggedIn;
     private Long userIdChattingTo;
     private ServiceNetwork serviceNetwork;
     private Stage stage;
     private final ObservableList<String> dataList = FXCollections.observableArrayList();
+    private static final int NUM_OF_MESSAGES_TO_LOAD = 5;
+    private int currentPage;
+    private int maxPages;
+
 
     public ServiceNetwork getServiceNetwork() {
         return serviceNetwork;
@@ -43,8 +52,57 @@ public class ControllerChat {
     private void initialize() {
         Platform.runLater(() -> {
             setLabelUserLoggedIn(userIdChattingTo);
-            initializeListViewWithMessages();
+            //initializeListViewWithMessages();
+            initializeListViewPaginated();
         });
+    }
+
+    private Tuple<Integer, Integer> getOffsetLimit(Integer currentPage, Integer pagesize) {
+        return new Tuple<>((currentPage - 1) * pagesize, pagesize);
+    }
+
+    public List<Message> getConversationPaginated(Integer page, Integer pageSize) {
+        Utilizator myUser = serviceNetwork.findUser(userIdLoggedIn);
+        Utilizator friendUser = serviceNetwork.findUser(userIdChattingTo);
+        Tuple<Integer, Integer> limitOffset = getOffsetLimit(page, pageSize);
+        Integer offset = limitOffset.getLeft();
+        Integer limit = limitOffset.getRight();
+        var conversation = serviceNetwork.getConversationPaginated(myUser.getId(), friendUser.getId(), offset, limit);
+        List<Message> messageList = new ArrayList<>();
+        for (Message message : conversation) {
+            messageList.add(message);
+        }
+        messageList.sort(Comparator.comparing(Message::getData));
+        return messageList;
+    }
+
+    private void initializeListViewPaginated() {
+
+        dataList.clear();
+        currentPage = 1;
+        updatePaginationButtons();
+        List<Message> messageList = new ArrayList<>();
+        for (Message message : serviceNetwork.conversatieUtilizatori(userIdLoggedIn, userIdChattingTo)) {
+            messageList.add(message);
+        }
+        maxPages = (messageList.size() / NUM_OF_MESSAGES_TO_LOAD) + 1;
+        List<Message> conversation = new ArrayList<>();
+        for (Message messageConversation : serviceNetwork.getConversationPaginated(userIdLoggedIn, userIdChattingTo, currentPage, NUM_OF_MESSAGES_TO_LOAD)) {
+            conversation.add(messageConversation);
+        }
+        conversation.sort(Comparator.comparing(Message::getData));
+        for (Message m : conversation) {
+            if (m.getFrom().getId().equals(userIdLoggedIn))
+                dataList.add("You: " + m.getMessage());
+            else
+                dataList.add(m.getFrom().getFirstName() + " " + m.getFrom().getLastName() + ": " + m.getMessage());
+        }
+        listViewChat.setItems(dataList);
+    }
+
+    private void updatePaginationButtons() {
+        previousButton.setDisable(currentPage == 1);
+        nextButton.setDisable(currentPage == maxPages);
     }
 
     private void initializeListViewWithMessages() {
@@ -86,8 +144,9 @@ public class ControllerChat {
             List<Long> userList = new ArrayList<Long>();
             userList.add(userIdChattingTo);
             serviceNetwork.trimiteMesaj(userIdLoggedIn, userList, textFieldChat.getText());
-            dataList.clear();
-            initializeListViewWithMessages();
+            //dataList.clear();
+            //initializeListViewWithMessages();
+            initializeListViewPaginated();
             textFieldChat.clear();
 
         }
@@ -103,6 +162,41 @@ public class ControllerChat {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onClickGoPreviousPage(ActionEvent actionEvent) {
+        currentPage--;
+        dataList.clear();
+        List<Message> conversation = new ArrayList<>();
+        for (Message messageConversation : getConversationPaginated(currentPage, NUM_OF_MESSAGES_TO_LOAD)) {
+            conversation.add(messageConversation);
+        }
+        conversation.sort(Comparator.comparing(Message::getData));
+        for (Message m : conversation) {
+            if (m.getFrom().getId().equals(userIdLoggedIn))
+                dataList.add("You: " + m.getMessage());
+            else
+                dataList.add(m.getFrom().getFirstName() + " " + m.getFrom().getLastName() + ": " + m.getMessage());
+        }
+        updatePaginationButtons();
+    }
+
+
+    public void onClickGoNextPage(ActionEvent actionEvent) {
+        currentPage++;
+        dataList.clear();
+        List<Message> conversation = new ArrayList<>();
+        for (Message messageConversation : getConversationPaginated(currentPage, NUM_OF_MESSAGES_TO_LOAD)) {
+            conversation.add(messageConversation);
+        }
+        conversation.sort(Comparator.comparing(Message::getData));
+        for (Message m : conversation) {
+            if (m.getFrom().getId().equals(userIdLoggedIn))
+                dataList.add("You: " + m.getMessage());
+            else
+                dataList.add(m.getFrom().getFirstName() + " " + m.getFrom().getLastName() + ": " + m.getMessage());
+        }
+        updatePaginationButtons();
     }
 }
 

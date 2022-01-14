@@ -21,7 +21,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Repository<Long, Utilizator> utilizatorRepoDB = new UtilizatorDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres");
-        Repository<Long, Message> messageRepositoryDb = new MessageDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", utilizatorRepoDB);
+        MessageDbRepository messageRepositoryDb = new MessageDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", utilizatorRepoDB);
         ServiceUser serviceUser = new ServiceUser(utilizatorRepoDB, new UserValidator());
         EventDbRepository evenimentDbRepository = new EventDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres", utilizatorRepoDB);
         Repository<Tuple<Long, Long>, Prietenie> prietenieDbRepository = new PrietenieDbRepository("jdbc:postgresql://localhost:5432/socialnetwork", "postgres", "postgres");
@@ -30,6 +30,7 @@ public class HelloApplication extends Application {
         ServicePrietenie servicePrietenie = new ServicePrietenie(utilizatorRepoDB, prietenieDbRepository);
         ServiceNetwork serviceNetwork = new ServiceNetwork(serviceUser, servicePrietenie, serviceMessage, serviceEveniment);
 
+        messageRepositoryDb.getConversationPaginated(2L,8L,0,5).forEach(System.out::println);
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/login-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();

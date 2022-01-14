@@ -2,6 +2,7 @@ package com.example.laborator6map.service;
 
 import com.example.laborator6map.domain.*;
 import com.example.laborator6map.repository.Repository;
+import com.example.laborator6map.repository.db.MessageDbRepository;
 import com.example.laborator6map.validators.RepositoryException;
 
 import java.time.LocalDateTime;
@@ -10,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class ServiceMessage {
     private Repository<Long, Utilizator> utilizatorRepository;
-    private Repository<Long, Message> messageRepository;
+    private MessageDbRepository messageRepository;
 
-    public ServiceMessage(Repository<Long, Utilizator> utilizatorRepository, Repository<Long, Message> messageRepository) {
+    public ServiceMessage(Repository<Long, Utilizator> utilizatorRepository, MessageDbRepository messageRepository) {
         this.utilizatorRepository = utilizatorRepository;
         this.messageRepository = messageRepository;
     }
@@ -67,5 +68,9 @@ public class ServiceMessage {
         List<Message> messageList = messages.stream().filter(x -> x.getTo().stream().map(Entity::getId).collect(Collectors.toList()).contains(id)).collect(Collectors.toList());
         Collections.sort(messageList, Comparator.comparing(Message::getData));
         return messageList;
+    }
+
+    public Iterable<Message> getConversationPaginated(Long idUser1, Long idUser2, int offset, int limit) {
+        return messageRepository.getConversationPaginated(idUser1, idUser2, offset, limit);
     }
 }

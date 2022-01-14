@@ -177,4 +177,8 @@ public class ServiceNetwork {
     public void nuMaiParticipaLaEveniment(Long id, Long userIdLoggedIn) {
         serviceEveniment.nuMaiParticipaLaEveniment(id , userIdLoggedIn);
     }
+
+    public Iterable<Message> getConversationPaginated(Long idUser1, Long idUser2, int offset, int limit) {
+        return serviceMessage.getConversationPaginated(idUser1, idUser2, offset, limit);
+    }
 }

@@ -29,7 +29,7 @@ public class MessageDbRepository implements Repository<Long, Message> {
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement statement = connection.prepareStatement("SELECT * from messages, messages_to where messages.id = ? and messages.id = messages_to.id_mesaj")) {
 
-            statement.setLong(1,aLong);
+            statement.setLong(1, aLong);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             Long id = resultSet.getLong("id");
@@ -41,11 +41,11 @@ public class MessageDbRepository implements Repository<Long, Message> {
             List<Utilizator> userList = new ArrayList<>();
             userList.add(utilizatorRepository.findOne(to));
             Utilizator fromUtilizator = utilizatorRepository.findOne(from);
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 to = resultSet.getLong("id_to");
                 userList.add(utilizatorRepository.findOne(to));
             }
-            Message message1 = new Message(fromUtilizator,userList,date,message,reply);
+            Message message1 = new Message(fromUtilizator, userList, date, message, reply);
             message1.setId(id);
             return message1;
         } catch (SQLException e) {
@@ -72,27 +72,26 @@ public class MessageDbRepository implements Repository<Long, Message> {
             userList.add(utilizatorRepository.findOne(to));
             Long oldMessageId = id;
             while (resultSet.next()) {
-                 id = resultSet.getLong("id");
-                 if(id.equals(oldMessageId)) {
-                     to = resultSet.getLong("id_to");
-                     userList.add(utilizatorRepository.findOne(to));
-                 }
-                 else {
-                     Message message1 = new Message(fromUtilizator, new ArrayList<>(userList), date, message, reply);
-                     message1.setId(oldMessageId);
-                     messages.add(message1);
-                     userList.clear();
-                     from = resultSet.getLong("from");
-                     message = resultSet.getString("mesaj");
-                     date = resultSet.getTimestamp("data_trimiterii").toLocalDateTime();
-                     reply = resultSet.getLong("reply");
-                     to = resultSet.getLong("id_to");
-                     fromUtilizator = utilizatorRepository.findOne(from);
-                     userList.add(utilizatorRepository.findOne(to));
-                 }
+                id = resultSet.getLong("id");
+                if (id.equals(oldMessageId)) {
+                    to = resultSet.getLong("id_to");
+                    userList.add(utilizatorRepository.findOne(to));
+                } else {
+                    Message message1 = new Message(fromUtilizator, new ArrayList<>(userList), date, message, reply);
+                    message1.setId(oldMessageId);
+                    messages.add(message1);
+                    userList.clear();
+                    from = resultSet.getLong("from");
+                    message = resultSet.getString("mesaj");
+                    date = resultSet.getTimestamp("data_trimiterii").toLocalDateTime();
+                    reply = resultSet.getLong("reply");
+                    to = resultSet.getLong("id_to");
+                    fromUtilizator = utilizatorRepository.findOne(from);
+                    userList.add(utilizatorRepository.findOne(to));
+                }
                 oldMessageId = id;
             }
-            Message message2 = new Message(fromUtilizator,new ArrayList<>(userList),date,message,reply);
+            Message message2 = new Message(fromUtilizator, new ArrayList<>(userList), date, message, reply);
             message2.setId(id);
             messages.add(message2);
             return messages;
@@ -111,9 +110,9 @@ public class MessageDbRepository implements Repository<Long, Message> {
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setLong(1, entity.getFrom().getId());
-            ps.setString(2,entity.getMessage());
-            ps.setTimestamp(3,Timestamp.valueOf(entity.getData()));
-            ps.setLong(4,entity.getReply());
+            ps.setString(2, entity.getMessage());
+            ps.setTimestamp(3, Timestamp.valueOf(entity.getData()));
+            ps.setLong(4, entity.getReply());
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -123,10 +122,10 @@ public class MessageDbRepository implements Repository<Long, Message> {
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement statement = connection.prepareStatement("SELECT id from messages where \"from\"= ? and mesaj = ? and data_trimiterii = ? and reply =?")) {
 
-            statement.setLong(1,entity.getFrom().getId());
-            statement.setString(2,entity.getMessage());
-            statement.setTimestamp(3,Timestamp.valueOf(entity.getData()));
-            statement.setLong(4,entity.getReply());
+            statement.setLong(1, entity.getFrom().getId());
+            statement.setString(2, entity.getMessage());
+            statement.setTimestamp(3, Timestamp.valueOf(entity.getData()));
+            statement.setLong(4, entity.getReply());
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             idMesaj = resultSet.getLong("id");
@@ -135,7 +134,7 @@ public class MessageDbRepository implements Repository<Long, Message> {
         }
 
         Long finalIdMesaj = idMesaj;
-        entity.getTo().forEach(x->{
+        entity.getTo().forEach(x -> {
             try (Connection connection = DriverManager.getConnection(url, username, password);
                  PreparedStatement ps = connection.prepareStatement(sql2)) {
 
@@ -155,19 +154,19 @@ public class MessageDbRepository implements Repository<Long, Message> {
         String sql = "delete from messages where id = ?";
         String sql2 = "delete from messages_to where id_mesaj = ?";
 
-        try (Connection connection = DriverManager.getConnection(url,username,password);
+        try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setLong(1,aLong);
+            ps.setLong(1, aLong);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        try (Connection connection = DriverManager.getConnection(url,username,password);
+        try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql2)) {
 
-            ps.setLong(1,aLong);
+            ps.setLong(1, aLong);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -177,6 +176,57 @@ public class MessageDbRepository implements Repository<Long, Message> {
 
     @Override
     public Message update(Message entity) {
+        return null;
+    }
+
+    public Iterable<Message> getConversationPaginated(Long idUser1, Long idUser2, int offset, int limit) {
+        Set<Message> messages = new HashSet<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement statement = connection.prepareStatement("select id, \"from\", mesaj, data_trimiterii, reply, id_to\n" +
+                     "from messages m\n" +
+                     "inner join messages_to mt on m.id = mt.id_mesaj\n" +
+                     "where (m.from = ? and mt.id_to = ?) or (m.from = ? and mt.id_to = ?)\n" +
+                     "order by m.data_trimiterii desc\n" +
+                     "offset ? limit ?")) {
+            statement.setLong(1, idUser1);
+            statement.setLong(2, idUser2);
+            statement.setLong(3, idUser2);
+            statement.setLong(4, idUser1);
+            statement.setInt(5, offset);
+            statement.setInt(6, limit);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            Long id = resultSet.getLong("id");
+            Long from = resultSet.getLong("from");
+            String message = resultSet.getString("mesaj");
+            LocalDateTime date = resultSet.getTimestamp("data_trimiterii").toLocalDateTime();
+            Long reply = resultSet.getLong("reply");
+            Long to = resultSet.getLong("id_to");
+            Utilizator fromUtilizator = utilizatorRepository.findOne(from);
+            List<Utilizator> userList = new ArrayList<>();
+            userList.add(utilizatorRepository.findOne(to));
+            Message message1 = new Message(fromUtilizator, new ArrayList<>(userList), date, message, reply);
+            message1.setId(id);
+            messages.add(message1);
+            userList.clear();
+            while (resultSet.next()) {
+                id = resultSet.getLong("id");
+                from = resultSet.getLong("from");
+                message = resultSet.getString("mesaj");
+                date = resultSet.getTimestamp("data_trimiterii").toLocalDateTime();
+                reply = resultSet.getLong("reply");
+                to = resultSet.getLong("id_to");
+                fromUtilizator = utilizatorRepository.findOne(from);
+                userList.add(utilizatorRepository.findOne(to));
+                message1 = new Message(fromUtilizator, new ArrayList<>(userList), date, message, reply);
+                message1.setId(id);
+                messages.add(message1);
+                userList.clear();
+            }
+            return messages;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
