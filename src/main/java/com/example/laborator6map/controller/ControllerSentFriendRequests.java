@@ -48,6 +48,12 @@ public class ControllerSentFriendRequests {
 
     private Long userIdLoggedIn;
 
+    private boolean sameSession;
+
+    public void setSameSession(boolean sameSession) {
+        this.sameSession = sameSession;
+    }
+
     @FXML
     private void initialize() {
         Platform.runLater(() -> {
@@ -98,6 +104,7 @@ public class ControllerSentFriendRequests {
         ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

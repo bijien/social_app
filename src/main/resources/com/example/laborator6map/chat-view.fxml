@@ -22,8 +22,8 @@
                 </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button fx:id="previousButton" mnemonicParsing="false" text="Previous page" onAction="#onClickGoPreviousPage"/>
-                  <Button fx:id="nextButton" mnemonicParsing="false" text="Next page" onAction="#onClickGoNextPage"/>
+                  <Button fx:id="previousButton" mnemonicParsing="false" text="Previous page" onAction="#onClickGoPreviousPage" styleClass="purple-button" stylesheets="@../css/button.css"/>
+                  <Button fx:id="nextButton" mnemonicParsing="false" text="Next page" onAction="#onClickGoNextPage" styleClass="purple-button" stylesheets="@../css/button.css"/>
                </children>
             </HBox>
                 <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onClickBack" styleClass="purple-button" stylesheets="@../css/button.css" text="Back" />

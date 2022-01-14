@@ -37,6 +37,10 @@ public class ControllerEvent {
     private ServiceNetwork serviceNetwork;
     private Long userIdLoggedIn;
     private final ObservableList<Eveniment> dataList = FXCollections.observableArrayList();
+    private boolean sameSession;
+    public void setSameSession(boolean sameSession) {
+        this.sameSession = sameSession;
+    }
 
     public ServiceNetwork getServiceNetwork() {
         return serviceNetwork;
@@ -95,6 +99,7 @@ public class ControllerEvent {
         ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

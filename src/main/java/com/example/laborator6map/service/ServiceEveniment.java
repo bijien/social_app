@@ -47,4 +47,8 @@ public class ServiceEveniment {
     public void nuMaiParticipaLaEveniment(Long id, Long userIdLoggedIn) {
         evenimentRepository.nuMaiParticipaLaEveniment(id, userIdLoggedIn);
     }
+
+    public void stergeEveniment(Long id) {
+        evenimentRepository.delete(id);
+    }
 }

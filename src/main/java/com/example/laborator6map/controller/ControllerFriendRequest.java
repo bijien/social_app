@@ -36,6 +36,12 @@ public class ControllerFriendRequest {
     @FXML
     public TableColumn<Prietenie, String> columnStatusFriendRequest;
 
+    private boolean sameSession;
+
+    public void setSameSession(boolean sameSession) {
+        this.sameSession = sameSession;
+    }
+
     private ServiceNetwork serviceNetwork;
 
     public ServiceNetwork getServiceNetwork() {
@@ -79,6 +85,7 @@ public class ControllerFriendRequest {
         ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

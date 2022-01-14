@@ -181,4 +181,15 @@ public class ServiceNetwork {
     public Iterable<Message> getConversationPaginated(Long idUser1, Long idUser2, int offset, int limit) {
         return serviceMessage.getConversationPaginated(idUser1, idUser2, offset, limit);
     }
+
+    public void deletePastEventsByADate(LocalDateTime localDateTime) {
+        List<Long> idEventsToDelete = new ArrayList<>();
+        for(Eveniment eveniment : serviceEveniment.getAll()) {
+            if(eveniment.getData().isBefore(localDateTime))
+                idEventsToDelete.add(eveniment.getId());
+        }
+        for(Long idEvent : idEventsToDelete) {
+            serviceEveniment.stergeEveniment(idEvent);
+        }
+    }
 }

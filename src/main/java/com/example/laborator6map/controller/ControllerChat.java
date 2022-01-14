@@ -38,7 +38,11 @@ public class ControllerChat {
     private static final int NUM_OF_MESSAGES_TO_LOAD = 5;
     private int currentPage;
     private int maxPages;
+    private boolean sameSession;
 
+    public void setSameSession(boolean sameSession) {
+        this.sameSession = sameSession;
+    }
 
     public ServiceNetwork getServiceNetwork() {
         return serviceNetwork;
@@ -158,6 +162,7 @@ public class ControllerChat {
         ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

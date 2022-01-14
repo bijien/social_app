@@ -28,6 +28,11 @@ public class ControllerCreateEvent {
 
     private ServiceNetwork serviceNetwork;
     private Long userIdLoggedIn;
+    private boolean sameSession;
+
+    public void setSameSession(boolean sameSession) {
+        this.sameSession = sameSession;
+    }
 
     public void setUserId(Long userIdLoggedIn) {
         this.userIdLoggedIn = userIdLoggedIn;
@@ -48,7 +53,7 @@ public class ControllerCreateEvent {
                 @Override
                 public void updateItem(LocalDate date, boolean empty) {
                     super.updateItem(date, empty);
-                    setDisable(empty || date.compareTo(LocalDate.now()) < 0 );
+                    setDisable(empty || date.compareTo(LocalDate.now()) < 0);
                 }
             });
         });
@@ -70,22 +75,34 @@ public class ControllerCreateEvent {
             try {
                 LocalDate localDate = datePickerData.getValue();
                 LocalDateTime localDateTime = localDate.atTime(Integer.parseInt(textFieldOra.getText()), Integer.parseInt(textFieldMinute.getText()));
-                serviceNetwork.createEvent(userIdLoggedIn, textFieldNume.getText(), textFieldLocatie.getText(), textFieldDescriere.getText(), localDateTime);
+                if (localDateTime.isBefore(LocalDateTime.now())) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Date incorecte");
+                    alert.setHeaderText("Ora evenimentului este incorecta");
+                    alert.setContentText("Incercati din nou");
+                    alert.showAndWait().ifPresent(rs -> {
+                        if (rs == ButtonType.OK) {
+                            System.out.println("Pressed OK.");
+                        }
+                    });
+                } else {
+                    serviceNetwork.createEvent(userIdLoggedIn, textFieldNume.getText(), textFieldLocatie.getText(), textFieldDescriere.getText(), localDateTime);
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("");
-                alert.setHeaderText("Eveniment creat cu succes");
-                alert.setContentText("");
-                alert.showAndWait().ifPresent(rs -> {
-                    if (rs == ButtonType.OK) {
-                        System.out.println("Pressed OK.");
-                    }
-                });
-                textFieldMinute.clear();
-                textFieldLocatie.clear();
-                textFieldOra.clear();
-                textFieldDescriere.clear();
-                textFieldNume.clear();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("");
+                    alert.setHeaderText("Eveniment creat cu succes");
+                    alert.setContentText("");
+                    alert.showAndWait().ifPresent(rs -> {
+                        if (rs == ButtonType.OK) {
+                            System.out.println("Pressed OK.");
+                        }
+                    });
+                    textFieldMinute.clear();
+                    textFieldLocatie.clear();
+                    textFieldOra.clear();
+                    textFieldDescriere.clear();
+                    textFieldNume.clear();
+                }
             } catch (NumberFormatException | DateTimeException ex) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Date incorecte");
@@ -106,6 +123,7 @@ public class ControllerCreateEvent {
         ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

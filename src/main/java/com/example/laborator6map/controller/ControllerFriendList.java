@@ -60,6 +60,10 @@ public class ControllerFriendList {
     public ServiceNetwork getServiceNetwork() {
         return serviceNetwork;
     }
+    private boolean sameSession;
+    public void setSameSession(boolean sameSession) {
+        this.sameSession = sameSession;
+    }
 
     public void setServiceNetwork(ServiceNetwork serviceNetwork) {
         this.serviceNetwork = serviceNetwork;
@@ -71,6 +75,7 @@ public class ControllerFriendList {
             setLabelUserLoggedIn(userIdLoggedIn);
             initializeUserList();
             initializeFriendList();
+            serviceNetwork.deletePastEventsByADate(LocalDateTime.now());
             notifyAboutUpcomingEvents();
         });
     }
@@ -78,7 +83,7 @@ public class ControllerFriendList {
     private void notifyAboutUpcomingEvents() {
         for(Eveniment eveniment : serviceNetwork.getAllEvenimenteWhereUserParticipating(userIdLoggedIn)) {
             long dateDiff = ChronoUnit.DAYS.between(LocalDateTime.now(), eveniment.getData());
-            if(serviceNetwork.isParticipating(eveniment.getId(), userIdLoggedIn).equals("DA") && dateDiff <= 3) {
+            if(serviceNetwork.isParticipating(eveniment.getId(), userIdLoggedIn).equals("DA") && dateDiff <= 3 && !sameSession) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Urmeaza urmatorul eveniment");
                 alert.setHeaderText("Organizator: " + eveniment.getCreator().getFirstName() + " " + eveniment.getCreator().getLastName() + "\n" +
@@ -232,6 +237,7 @@ public class ControllerFriendList {
         ControllerFriendRequest controller = fxmlLoader.<ControllerFriendRequest>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -244,6 +250,7 @@ public class ControllerFriendList {
         ControllerSentFriendRequests controller = fxmlLoader.<ControllerSentFriendRequests>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -268,6 +275,7 @@ public class ControllerFriendList {
             controller.setServiceNetwork(this.getServiceNetwork());
             controller.setUserId(userIdLoggedIn);
             controller.setUserIdChattingTo(tableViewFriendList.getSelectionModel().getSelectedItem().getId());
+            controller.setSameSession(true);
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -281,6 +289,7 @@ public class ControllerFriendList {
         ControllerRapoarte controller = fxmlLoader.<ControllerRapoarte>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -293,6 +302,7 @@ public class ControllerFriendList {
         ControllerCreateEvent controller = fxmlLoader.<ControllerCreateEvent>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -305,6 +315,7 @@ public class ControllerFriendList {
         ControllerEvent controller = fxmlLoader.<ControllerEvent>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -317,6 +328,7 @@ public class ControllerFriendList {
         ControllerParticipatingEvents controller = fxmlLoader.<ControllerParticipatingEvents>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

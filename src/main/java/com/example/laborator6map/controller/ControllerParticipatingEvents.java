@@ -35,6 +35,11 @@ public class ControllerParticipatingEvents {
     private final ObservableList<Eveniment> dataList = FXCollections.observableArrayList();
 
     Stage stage;
+    private boolean sameSession;
+
+    public void setSameSession(boolean sameSession) {
+        this.sameSession = sameSession;
+    }
 
     public ServiceNetwork getServiceNetwork() {
         return serviceNetwork;
@@ -146,8 +151,7 @@ public class ControllerParticipatingEvents {
                     System.out.println("Pressed OK.");
                 }
             });
-        }
-        else {
+        } else {
             serviceNetwork.nuMaiParticipaLaEveniment(eveniment.getId(), userIdLoggedIn);
             dataList.clear();
             initializeEventList();
@@ -161,6 +165,7 @@ public class ControllerParticipatingEvents {
         ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
         controller.setServiceNetwork(this.getServiceNetwork());
         controller.setUserId(userIdLoggedIn);
+        controller.setSameSession(true);
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

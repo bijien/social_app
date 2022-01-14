@@ -54,19 +54,19 @@ public class ControllerLogin {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(rawPassword.getBytes(StandardCharsets.UTF_8));
             String encoded = Base64.getEncoder().encodeToString(hash);
-            if(encoded.equals(utilizator.getPassword())) {
+            if (encoded.equals(utilizator.getPassword())) {
                 userIdLoggedIn = utilizator.getId();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/friendlist-view.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
                 ControllerFriendList controller = fxmlLoader.<ControllerFriendList>getController();
                 controller.setServiceNetwork(this.getServiceNetwork());
                 controller.setUserId(userIdLoggedIn);
+                controller.setSameSession(false);
                 stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
-            }
-            else {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Parola incorecta");
                 alert.setHeaderText("Parola introdusa nu este corecta");
