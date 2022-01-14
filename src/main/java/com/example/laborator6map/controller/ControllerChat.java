@@ -36,7 +36,7 @@ public class ControllerChat {
     private Stage stage;
     private final ObservableList<String> dataList = FXCollections.observableArrayList();
     private static final int NUM_OF_MESSAGES_TO_LOAD = 5;
-    private int currentPage;
+    private int currentPage = 1;
     private int maxPages;
     private boolean sameSession;
 
@@ -89,12 +89,15 @@ public class ControllerChat {
         for (Message message : serviceNetwork.conversatieUtilizatori(userIdLoggedIn, userIdChattingTo)) {
             messageList.add(message);
         }
-        maxPages = (messageList.size() / NUM_OF_MESSAGES_TO_LOAD) + 1;
+        if (messageList.size() % NUM_OF_MESSAGES_TO_LOAD == 0) {
+            maxPages = messageList.size() / NUM_OF_MESSAGES_TO_LOAD;
+        } else {
+            maxPages = (messageList.size() / NUM_OF_MESSAGES_TO_LOAD) + 1;
+        }
         List<Message> conversation = new ArrayList<>();
-        for (Message messageConversation : serviceNetwork.getConversationPaginated(userIdLoggedIn, userIdChattingTo, currentPage, NUM_OF_MESSAGES_TO_LOAD)) {
+        for (Message messageConversation : getConversationPaginated(currentPage, NUM_OF_MESSAGES_TO_LOAD)) {
             conversation.add(messageConversation);
         }
-        conversation.sort(Comparator.comparing(Message::getData));
         for (Message m : conversation) {
             if (m.getFrom().getId().equals(userIdLoggedIn))
                 dataList.add("You: " + m.getMessage());
@@ -176,7 +179,6 @@ public class ControllerChat {
         for (Message messageConversation : getConversationPaginated(currentPage, NUM_OF_MESSAGES_TO_LOAD)) {
             conversation.add(messageConversation);
         }
-        conversation.sort(Comparator.comparing(Message::getData));
         for (Message m : conversation) {
             if (m.getFrom().getId().equals(userIdLoggedIn))
                 dataList.add("You: " + m.getMessage());
@@ -194,7 +196,6 @@ public class ControllerChat {
         for (Message messageConversation : getConversationPaginated(currentPage, NUM_OF_MESSAGES_TO_LOAD)) {
             conversation.add(messageConversation);
         }
-        conversation.sort(Comparator.comparing(Message::getData));
         for (Message m : conversation) {
             if (m.getFrom().getId().equals(userIdLoggedIn))
                 dataList.add("You: " + m.getMessage());

@@ -30,7 +30,6 @@ public class HelloApplication extends Application {
         ServicePrietenie servicePrietenie = new ServicePrietenie(utilizatorRepoDB, prietenieDbRepository);
         ServiceNetwork serviceNetwork = new ServiceNetwork(serviceUser, servicePrietenie, serviceMessage, serviceEveniment);
 
-        messageRepositoryDb.getConversationPaginated(2L,8L,0,5).forEach(System.out::println);
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/example/laborator6map/login-view.fxml"));
         Parent root = (Parent) fxmlLoader.load();
