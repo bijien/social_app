@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ControllerSentFriendRequests" styleClass="beige-background" stylesheets="@../css/background.css">
+   <children>
+      <VBox alignment="CENTER" layoutX="116.0" layoutY="27.0" prefHeight="310.0" prefWidth="367.0" spacing="20.0">
+         <children>
+            <Label text="Cereri de prietenie trimise" />
+            <TableView fx:id="tableSentFriendRequests" prefHeight="272.0" prefWidth="251.0" styleClass="table-view" stylesheets="@../css/tableview.css">
+              <columns>
+                <TableColumn fx:id="columnFirstNameSentFriendRequest" prefWidth="75.0" text="First Name" />
+                <TableColumn fx:id="columnLastNameSentFriendRequest" prefWidth="75.0" text="Last Name" />
+                  <TableColumn fx:id="columnDataSentFriendRequest" prefWidth="75.0" text="Data" />
+                  <TableColumn fx:id="columnStatusSentFriendRequest" prefWidth="75.0" text="Status" />
+              </columns>
+            </TableView>
+            <Button fx:id="buttonRemoveFriendRequest" mnemonicParsing="false" onAction="#onClickRemoveFriendRequest" text="Remove" styleClass="purple-button" stylesheets="@../css/button.css"/>
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onClickGoBack" text="Back" styleClass="purple-button" stylesheets="@../css/button.css"/>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

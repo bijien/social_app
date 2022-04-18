@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ControllerRapoarte" styleClass="beige-background" stylesheets="@../css/background.css">
+   <children>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Data de inceput" />
+                  <DatePicker fx:id="datePickerDataInceput" />
+                  <Label text="Data de sfarsit" />
+                  <DatePicker fx:id="datePickerDataSfarsit" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tableViewFriendListRaport" prefHeight="100.0" prefWidth="335.0" styleClass="table-view" stylesheets="@../css/tableview.css">
+                    <columns>
+                      <TableColumn fx:id="columnFirstNameFriendListRaport" prefWidth="117.59997254610062" text="First Name" />
+                      <TableColumn fx:id="columnLastNameFriendListRaport" prefWidth="102.4000244140625" text="Last Name" />
+                       <TableColumn fx:id="columnUserNameFriendListRaport" prefWidth="113.5999786376953" text="Username" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+               <children>
+                  <Button onAction="#onClickRaportMesajeSiPrieteni" mnemonicParsing="false" text="Mesaje si prieteni noi" styleClass="purple-button" stylesheets="@../css/button.css"/>
+                  <Button onAction="#onClickRaportMesajeDeLaUnPrieten" mnemonicParsing="false" text="Mesaje de la un prieten" styleClass="purple-button" stylesheets="@../css/button.css"/>
+               </children>
+            </HBox>
+            <Button onAction="#onClickGoBack" mnemonicParsing="false" text="Back" styleClass="purple-button" stylesheets="@../css/button.css"/>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
